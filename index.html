@@ -3105,12 +3105,10 @@ function openAddFlow(dateStr) {
     diveMode: 'shore',
     plannedDepth: '',
     plannedDuration: '',
-    diveGoal: 'recreational',
     entryPoint: '',
     exitPoint: '',
     boatName: '',
     skipper: '',
-    planBuddy: '',
     kitNotes: '',
     envNotes: '',
     specialInstructions: '',
@@ -3180,7 +3178,6 @@ function saveAddFields() {
   // New planner fields (dive branch)
   const afDepth   = document.getElementById('af-depth');
   const afDur     = document.getElementById('af-dur');
-  const afBuddy   = document.getElementById('af-buddy');
   const afBoat    = document.getElementById('af-boat');
   const afSkipper = document.getElementById('af-skipper');
   const afEntry   = document.getElementById('af-entry');
@@ -3189,7 +3186,6 @@ function saveAddFields() {
   const afEnv     = document.getElementById('af-env');
   if (afDepth   && f.itemType === 'dive') f.plannedDepth    = afDepth.value;
   if (afDur)     f.plannedDuration   = afDur.value;
-  if (afBuddy)   f.planBuddy         = afBuddy.value;
   if (afBoat)    f.boatName          = afBoat.value;
   if (afSkipper) f.skipper           = afSkipper.value;
   if (afEntry)   f.entryPoint        = afEntry.value;
@@ -3316,10 +3312,6 @@ function renderAddStep2() {
           <div class="f-lbl">Exit Point</div>
           <input class="f-inp" type="text" id="af-exit" placeholder="e.g. Same / North beach…" value="${f.exitPoint||''}">
         </div>
-        <div class="f-row">
-          <div class="f-lbl">Buddy / Team</div>
-          <input class="f-inp" type="text" id="af-buddy" placeholder="Buddy name(s)" value="${f.planBuddy||''}">
-        </div>
       </div>`;
 
     const boatLogistics = `
@@ -3331,10 +3323,6 @@ function renderAddStep2() {
         <div class="f-row">
           <div class="f-lbl">Skipper</div>
           <input class="f-inp" type="text" id="af-skipper" placeholder="Skipper's name" value="${f.skipper||''}">
-        </div>
-        <div class="f-row">
-          <div class="f-lbl">Buddy / Team</div>
-          <input class="f-inp" type="text" id="af-buddy" placeholder="Buddy name(s)" value="${f.planBuddy||''}">
         </div>
       </div>`;
 
@@ -3389,14 +3377,6 @@ function renderAddStep2() {
           <div class="log-slider-labels"><span class="log-slider-lbl">10min</span><span class="log-slider-lbl">90min</span></div>
         </div>
 
-        <div style="padding: 10px 16px 6px; border-top: 0.5px solid var(--sep);">
-          <div class="f-lbl" style="margin-bottom:8px;">Dive Goal</div>
-          <div class="adp-goal-row" style="padding:0 0 4px; border-top:none;">
-            <button class="adp-goal-pill${f.diveGoal==='recreational'?' active':''}" onclick="setPlanGoal('recreational')">🤿 Recreational</button>
-            <button class="adp-goal-pill${f.diveGoal==='training'?' active':''}" onclick="setPlanGoal('training')">🎓 Training</button>
-            <button class="adp-goal-pill${f.diveGoal==='club'?' active':''}" onclick="setPlanGoal('club')">🏅 Club</button>
-          </div>
-        </div>
       </div>
 
       <!-- OPTIONAL: Logistics -->
@@ -3406,7 +3386,7 @@ function renderAddStep2() {
             <div class="adp-opt-hdr-ico">${f.diveMode==='boat'?'⛵':'📍'}</div>
             <div>
               <div class="adp-opt-hdr-txt">Logistics</div>
-              <div class="adp-opt-hdr-sub">${f.diveMode==='boat'?'Boat, skipper, buddy':'Entry/exit points, buddy'}</div>
+              <div class="adp-opt-hdr-sub">${f.diveMode==='boat'?'Boat name & skipper':'Entry & exit points'}</div>
             </div>
           </div>
           <div class="adp-opt-chev">›</div>
@@ -3613,8 +3593,6 @@ function renderAddStep3() {
         ${f.max ? `<div class="add-preview-row"><span class="add-preview-row-ico">👥</span><span class="add-preview-row-val">Max <strong>${f.max}</strong> people</span></div>` : ''}
         ${isDive && f.depth ? `<div class="add-preview-row"><span class="add-preview-row-ico">🔵</span><span class="add-preview-row-val">Max depth <strong>${f.depth}m</strong></span></div>` : ''}
         ${f.plannedDepth    ? `<div class="add-preview-row"><span class="add-preview-row-ico">📏</span><span class="add-preview-row-val">Planned ${f.plannedDepth}m · ${f.plannedDuration||'?'}min</span></div>` : ''}
-        ${f.planBuddy       ? `<div class="add-preview-row"><span class="add-preview-row-ico">👤</span><span class="add-preview-row-val">${f.planBuddy}</span></div>` : ''}
-        ${f.diveGoal && f.diveGoal !== 'recreational' ? `<div class="add-preview-row"><span class="add-preview-row-ico">🎯</span><span class="add-preview-row-val">${f.diveGoal.charAt(0).toUpperCase()+f.diveGoal.slice(1)} dive</span></div>` : ''}
         ${f.kitNotes        ? `<div class="add-preview-row"><span class="add-preview-row-ico">🎒</span><span class="add-preview-row-val">${f.kitNotes}</span></div>` : ''}
         ${f.envNotes        ? `<div class="add-preview-row"><span class="add-preview-row-ico">🌊</span><span class="add-preview-row-val">${f.envNotes}</span></div>` : ''}
         ${f.notes ? `<div class="add-preview-row"><span class="add-preview-row-ico">📝</span><span class="add-preview-row-val">${f.notes}</span></div>` : ''}
@@ -3645,9 +3623,7 @@ function confirmAdd() {
     createdBy: MY_NAME, notes: f.notes || '', att: [],
     plannedDepth:       f.plannedDepth || null,
     plannedDuration:    f.plannedDuration || null,
-    diveGoal:           f.diveGoal || 'recreational',
     diveMode:           f.diveMode || 'shore',
-    planBuddy:          f.planBuddy || '',
     boatName:           f.boatName || '',
     skipper:            f.skipper || '',
     entryPoint:         f.entryPoint || '',
@@ -3842,7 +3818,7 @@ renderSites();       // pre-render sites in background
     ` : (() => {
       const linked = S.items.find(it => it.id === l.calItemId);
       const planLine = linked && linked.plannedDepth
-        ? `<div style="margin-top:6px;font-size:12px;color:var(--txt3);">📏 Planned ${linked.plannedDepth}m · ${linked.plannedDuration||'?'}min${linked.planBuddy ? ' · 👤 '+linked.planBuddy : ''}</div>`
+        ? `<div style="margin-top:6px;font-size:12px;color:var(--txt3);">📏 Planned ${linked.plannedDepth}m · ${linked.plannedDuration||'?'}min</div>`
         : '';
       return `<div style="margin-top:10px;font-size:13px;color:var(--navy);font-weight:600;">Tap to complete your log →</div>${planLine}`;
     })();
@@ -3877,7 +3853,6 @@ renderSites();       // pre-render sites in background
       if (linked) {
         if (linked.plannedDepth    && !log.maxDepth)    log.maxDepth    = parseFloat(linked.plannedDepth);
         if (linked.plannedDuration && !log.bottomTime)  log.bottomTime  = parseFloat(linked.plannedDuration);
-        if (linked.planBuddy       && !log.buddy)       log.buddy       = linked.planBuddy;
       }
     }
 
@@ -4136,19 +4111,6 @@ renderSites();       // pre-render sites in background
   function setPlanMode(mode) {
     S.addFlow.diveMode = mode;
     renderAddModal();
-  }
-
-  function setPlanGoal(goal) {
-    S.addFlow.diveGoal = goal;
-    // update pills without re-rendering
-    document.querySelectorAll('.adp-goal-pill').forEach(el => {
-      const g = el.textContent.toLowerCase();
-      el.classList.toggle('active',
-        (goal==='recreational' && g.includes('recrea')) ||
-        (goal==='training'     && g.includes('train')) ||
-        (goal==='club'         && g.includes('club'))
-      );
-    });
   }
 
   function updatePlannerTide() {

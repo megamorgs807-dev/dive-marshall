@@ -1172,6 +1172,29 @@
     .log-btn-complete { flex: 2; padding: 13px; background: linear-gradient(180deg,var(--green) 0%,#14532d 100%); color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 2px 8px rgba(20,83,45,0.22); transition: opacity 0.15s, transform 0.1s; }
     .log-btn-complete:active { opacity: 0.88; transform: scale(0.99); }
 
+    /* ── Log modal sticky action bar ── */
+    .log-action-bar {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      gap: 10px;
+      padding: 14px 16px 36px;
+      margin: 24px -16px -100px;
+      background: rgba(238,242,249,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--sep);
+      box-shadow: 0 -4px 24px rgba(0,30,60,0.09);
+      z-index: 5;
+    }
+    .log-action-bar .log-btn-quick    { flex: 1; }
+    .log-action-bar .log-btn-complete { flex: 2; }
+    @media (max-width: 400px) {
+      .log-action-bar { flex-direction: column; gap: 8px; }
+      .log-action-bar .log-btn-quick    { flex: unset; order: 1; }
+      .log-action-bar .log-btn-complete { flex: unset; order: 2; }
+    }
+
     /* Vis label display */
     .log-vis-label { font-size: 13px; font-weight: 600; color: var(--navy); min-width: 100px; text-align: right; }
     .log-skill-label { font-size: 13px; font-weight: 600; color: var(--navy); min-width: 40px; text-align: right; }
@@ -3650,12 +3673,6 @@ renderSites();       // pre-render sites in background
         </div>
       </div>
 
-      <!-- Quick Save / Complete buttons -->
-      <div class="log-quick-save-row">
-        <button class="log-btn-quick" onclick="saveLogDraft()">Save Draft</button>
-        <button class="log-btn-complete" onclick="completeLogEntry()">${log.status==='pending'?'✓ Complete Log':'✓ Update Log'}</button>
-      </div>
-
       <!-- OPTIONAL: Gas & Cylinder -->
       <div class="log-optional-sec" id="optGas">
         <div class="log-optional-hdr" onclick="toggleOptSec('optGas')">
@@ -3780,6 +3797,12 @@ renderSites();       // pre-render sites in background
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Sticky action bar -->
+      <div class="log-action-bar">
+        <button class="log-btn-quick" onclick="saveLogDraft()">Save Draft</button>
+        <button class="log-btn-complete" onclick="completeLogEntry()">${log.status==='pending'?'✓ Complete Log':'✓ Update Log'}</button>
       </div>
     `;
 

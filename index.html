@@ -1235,6 +1235,44 @@
     .adp-tide-badge.np { background: var(--grey5); color: var(--txt3); }
     .adp-no-tide { font-size: 12px; color: var(--txt3); padding: 8px 16px; border-top: 0.5px solid var(--sep); }
 
+  /* Tide amplitude chip */
+  .adp-tide-amp { font-size: 11px; font-weight: 600; color: var(--txt3); }
+
+  /* Wind & weather strip */
+  .adp-wx-strip { display: flex; align-items: center; padding: 10px 16px 11px; border-top: 0.5px solid var(--sep); gap: 0; }
+  .adp-wx-wind { display: flex; align-items: center; gap: 7px; flex: 0 0 auto; }
+  .adp-wx-arrow { font-size: 20px; color: var(--navy); line-height: 1; }
+  .adp-wx-wind-col { display: flex; flex-direction: column; gap: 1px; }
+  .adp-wx-dir-lbl { font-size: 10px; color: var(--txt3); line-height: 1; }
+  .adp-wx-spd-row { display: flex; align-items: baseline; gap: 2px; }
+  .adp-wx-spd { font-size: 16px; font-weight: 800; line-height: 1; letter-spacing: -0.3px; }
+  .adp-wx-spd.calm { color: var(--green); }
+  .adp-wx-spd.mod  { color: var(--amber); }
+  .adp-wx-spd.str  { color: var(--red); }
+  .adp-wx-spd-unit { font-size: 10px; color: var(--txt3); }
+  .adp-wx-div { width: 0.5px; background: var(--sep); height: 28px; margin: 0 12px; flex-shrink: 0; }
+  .adp-wx-cond { display: flex; align-items: center; gap: 5px; flex: 1; }
+  .adp-wx-cond-ico { font-size: 18px; }
+  .adp-wx-cond-lbl { font-size: 12px; color: var(--txt2); line-height: 1.3; }
+  .adp-wx-hourly-btn { margin-left: auto; background: none; border: none; font-size: 11px; color: var(--navy); font-weight: 600; cursor: pointer; padding: 5px 0 5px 10px; font-family: inherit; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
+  .adp-wx-hourly-btn .wx-chev { display: inline-block; transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1); font-size: 14px; }
+  .adp-wx-hourly-btn.open .wx-chev { transform: rotate(90deg); }
+
+  /* Hourly forecast */
+  .adp-hourly-body { max-height: 0; overflow: hidden; transition: max-height 0.32s cubic-bezier(0.4,0,0.2,1); }
+  .adp-hourly-body.open { max-height: 130px; }
+  .adp-hourly-scroll { display: flex; overflow-x: auto; padding: 8px 12px 10px; gap: 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-top: 0.5px solid var(--sep); }
+  .adp-hourly-scroll::-webkit-scrollbar { display: none; }
+  .adp-hourly-card { flex-shrink: 0; width: 52px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 4px; border-radius: 10px; background: var(--grey5); margin-right: 5px; }
+  .adp-hourly-time { font-size: 9px; color: var(--txt3); font-weight: 600; }
+  .adp-hourly-ico { font-size: 15px; line-height: 1; }
+  .adp-hourly-arrow { font-size: 13px; color: var(--navy); line-height: 1; }
+  .adp-hourly-spd { font-size: 11px; font-weight: 700; line-height: 1; }
+  .adp-hourly-spd.calm { color: var(--green); }
+  .adp-hourly-spd.mod  { color: var(--amber); }
+  .adp-hourly-spd.str  { color: var(--red); }
+  .adp-hourly-unit { font-size: 9px; color: var(--txt3); }
+
     /* Goal pills */
     .adp-goal-row { display: flex; gap: 6px; padding: 10px 16px 12px; border-top: 0.5px solid var(--sep); flex-wrap: wrap; }
     .adp-goal-pill { flex: 1; min-width: 80px; padding: 7px 4px; border-radius: 20px; border: 1.5px solid var(--grey4); background: transparent; font-size: 12px; font-weight: 500; color: var(--txt3); cursor: pointer; font-family: inherit; transition: all 0.15s; text-align: center; white-space: nowrap; }
@@ -2602,7 +2640,12 @@ function divingTides(ds) {
               : (td.lw2 && inDay(td.lw2)) ? td.lw2
               : td.lw;
 
-  return { h: bestH, l: bestL, sp: td.sp };
+  // Tide amplitude: spring ~3.8–4.8m, neap ~2.0–2.8m, stable per date
+  const dayNum = parseInt((ds||'').split('-')[2]) || 1;
+  const amp = td.sp
+    ? (3.8 + ((dayNum * 7) % 11) * 0.1).toFixed(1)
+    : (2.0 + ((dayNum * 7) %  9) * 0.1).toFixed(1);
+  return { h: bestH, l: bestL, sp: td.sp, amp };
 }
 
 // Returns mock weather for a date string — specific data first, pseudo-random stable fallback
@@ -2617,6 +2660,99 @@ function weatherFor(dateStr) {
   const vis      = ['Good','Moderate','Good','Good','Fair'];
   const i = d % 5;
   return { icon: icons[i], summary: summaries[i], temp: temps[d % 9], wind: winds[i], vis: vis[i] };
+}
+
+// Generate realistic hourly wind/weather for a date — deterministic mock based on day weather
+function hourlyWeatherFor(dateStr, wd) {
+  if (!dateStr || !wd) return [];
+  const wParts  = (wd.wind || '').split(' ');
+  const baseDir = wParts[0] || 'SW';
+  const baseSpd = parseInt(wParts[1]) || 10;
+  const dirs    = ['N','NE','E','SE','S','SW','W','NW'];
+  const arrows  = ['↑','↗','→','↘','↓','↙','←','↖'];
+  const clearIcons  = ['☀️','☀️','🌤️'];
+  const cloudyIcons = ['⛅','⛅','☁️'];
+  const rainIcons   = ['🌦️','🌧️','🌦️'];
+  const isRainy = wd.icon.includes('🌦') || wd.icon.includes('🌧');
+  const isClear = wd.icon.includes('☀️') || wd.icon.includes('🌤');
+  const iconSet = isRainy ? rainIcons : isClear ? clearIcons : cloudyIcons;
+  let h = 0;
+  for (let i = 0; i < dateStr.length; i++) h = (h * 31 + dateStr.charCodeAt(i)) >>> 0;
+  const baseIdx = dirs.indexOf(baseDir) >= 0 ? dirs.indexOf(baseDir) : (h % 8);
+  return Array.from({ length: 16 }, (_, idx) => {
+    const hr    = 6 + idx;
+    const hh    = ((h ^ (hr * 2654435761)) >>> 0);
+    const dOff  = (hh % 3) - 1;
+    const hdIdx = (baseIdx + dOff + 8) % 8;
+    const hspd  = Math.max(1, baseSpd + ((hh >> 4) % 9) - 4);
+    return {
+      hr,
+      arrow:  arrows[hdIdx],
+      spd:    hspd,
+      icon:   iconSet[hh % iconSet.length],
+      spdCls: hspd <= 10 ? 'calm' : hspd <= 20 ? 'mod' : 'str'
+    };
+  });
+}
+
+// Build the full environment HTML for plannerTideRow (tide strip + weather strip + hourly)
+function buildPlannerEnvHtml(dateStr) {
+  if (!dateStr) return '';
+  const td = divingTides(dateStr);
+  const wd = weatherFor(dateStr);
+  if (!td && !wd) return `<div class="adp-no-tide">No data for this date</div>`;
+
+  const tideStrip = td ? `
+    <div class="adp-tide-strip">
+      <div class="adp-tide-ico">🌊</div>
+      <div class="adp-tide-txt">HW ${td.h} · LW ${td.l}</div>
+      <div class="adp-tide-amp">↕ ${td.amp}m</div>
+      <div class="adp-tide-badge ${td.sp?'sp':'np'}">${td.sp?'Spring':'Neap'}</div>
+    </div>` : '';
+
+  if (!wd) return tideStrip;
+
+  const wParts = (wd.wind || '').split(' ');
+  const wDir   = wParts[0] || '—';
+  const wSpd   = parseInt(wParts[1]) || 0;
+  const spdCls = wSpd <= 10 ? 'calm' : wSpd <= 20 ? 'mod' : 'str';
+  const dirMap = { N:'↑', NE:'↗', E:'→', SE:'↘', S:'↓', SW:'↙', W:'←', NW:'↖' };
+  const arrow  = dirMap[wDir] || '→';
+
+  const hourly = hourlyWeatherFor(dateStr, wd);
+  const cards  = hourly.map(h => `
+    <div class="adp-hourly-card">
+      <div class="adp-hourly-time">${String(h.hr).padStart(2,'0')}:00</div>
+      <div class="adp-hourly-ico">${h.icon}</div>
+      <div class="adp-hourly-arrow">${h.arrow}</div>
+      <div class="adp-hourly-spd ${h.spdCls}">${h.spd}</div>
+      <div class="adp-hourly-unit">kts</div>
+    </div>`).join('');
+
+  return `${tideStrip}
+    <div class="adp-wx-strip">
+      <div class="adp-wx-wind">
+        <div class="adp-wx-arrow">${arrow}</div>
+        <div class="adp-wx-wind-col">
+          <div class="adp-wx-dir-lbl">${wDir} Wind</div>
+          <div class="adp-wx-spd-row">
+            <span class="adp-wx-spd ${spdCls}">${wSpd}</span>
+            <span class="adp-wx-spd-unit">kts</span>
+          </div>
+        </div>
+      </div>
+      <div class="adp-wx-div"></div>
+      <div class="adp-wx-cond">
+        <span class="adp-wx-cond-ico">${wd.icon}</span>
+        <span class="adp-wx-cond-lbl">${wd.summary}</span>
+      </div>
+      <button class="adp-wx-hourly-btn" id="adpHourlyBtn" onclick="toggleAdpHourly()">
+        Hourly <span class="wx-chev">›</span>
+      </button>
+    </div>
+    <div class="adp-hourly-body" id="adpHourlyBody">
+      <div class="adp-hourly-scroll">${cards}</div>
+    </div>`;
 }
 
 // Build the Tide & Weather panel HTML
@@ -3292,15 +3428,8 @@ function renderAddStep2() {
     const siteOpts = sites.map(s => `<option value="${s}"${f.site===s?' selected':''}>${s}</option>`).join('');
     const todayStr = isoDate(TODAY);
 
-    // Tide auto-fill for selected date
-    const td = f.date ? divingTides(f.date) : null;
-    const tideHtml = td
-      ? `<div class="adp-tide-strip">
-           <div class="adp-tide-ico">🌊</div>
-           <div class="adp-tide-txt">HW ${td.h} · LW ${td.l}</div>
-           <div class="adp-tide-badge ${td.sp?'sp':'np'}">${td.sp?'Spring':'Neap'}</div>
-         </div>`
-      : `<div class="adp-no-tide">Select a date to see tide info</div>`;
+    // Tide, weather & hourly env strip for selected date
+    const tideHtml = buildPlannerEnvHtml(f.date);
 
     const shoreLogistics = `
       <div class="adp-opt-inner">
@@ -4108,6 +4237,14 @@ renderSites();       // pre-render sites in background
     if (sec) sec.classList.toggle('open');
   }
 
+  function toggleAdpHourly() {
+    const body = document.getElementById('adpHourlyBody');
+    const btn  = document.getElementById('adpHourlyBtn');
+    if (!body) return;
+    const isOpen = body.classList.toggle('open');
+    if (btn) btn.classList.toggle('open', isOpen);
+  }
+
   function setPlanMode(mode) {
     S.addFlow.diveMode = mode;
     renderAddModal();
@@ -4117,16 +4254,8 @@ renderSites();       // pre-render sites in background
     const date = document.getElementById('af-date')?.value;
     if (!date) return;
     S.addFlow.date = date;
-    const td = divingTides(date);
     const row = document.getElementById('plannerTideRow');
-    if (!row) return;
-    row.innerHTML = td
-      ? `<div class="adp-tide-strip">
-           <div class="adp-tide-ico">🌊</div>
-           <div class="adp-tide-txt">HW ${td.h} · LW ${td.l}</div>
-           <div class="adp-tide-badge ${td.sp?'sp':'np'}">${td.sp?'Spring':'Neap'}</div>
-         </div>`
-      : `<div class="adp-no-tide">No tide data for this date</div>`;
+    if (row) row.innerHTML = buildPlannerEnvHtml(date);
   }
 
   function setGasType(type) {

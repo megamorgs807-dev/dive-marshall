@@ -1172,6 +1172,24 @@
     .log-btn-complete { flex: 2; padding: 13px; background: linear-gradient(180deg,var(--green) 0%,#14532d 100%); color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 2px 8px rgba(20,83,45,0.22); transition: opacity 0.15s, transform 0.1s; }
     .log-btn-complete:active { opacity: 0.88; transform: scale(0.99); }
 
+    /* ── Gear check field ── */
+    .log-gear-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; cursor: text;
+      transition: background 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+    .log-gear-row.ok     { background: rgba(22,163,74,0.05); }
+    .log-gear-row.issue  { background: rgba(217,119,6,0.07); }
+    .log-gear-ico { font-size: 18px; flex-shrink: 0; line-height: 1; transition: transform 0.2s; }
+    .log-gear-row.issue .log-gear-ico { transform: scale(1.1); }
+    .log-gear-inp {
+      flex: 1; border: none; background: transparent;
+      font-size: 14px; font-weight: 500; outline: none;
+      font-family: inherit; line-height: 1.4; padding: 0;
+    }
+    .log-gear-inp.ok    { color: var(--green); }
+    .log-gear-inp.issue { color: #92400E; }
+
     /* ── Log modal sticky action bar ── */
     .log-action-bar {
       position: sticky;
@@ -1494,14 +1512,14 @@ const RAW_ITEMS = [
 ];
 
 const RAW_LOGS = [
-  { id:'lg1', calItemId:null, num:38, date:'2025-11-08', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:14.2, bottomTime:42, airIn:200, airOut:80,  temp:12, vis:3, suit:'7mm Wetsuit', weights:8,  notes:'Great viz today — saw a cuttlefish sheltering near the rocks. Slight current on the return.',      rating:4, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'' },
-  { id:'lg2', calItemId:null, num:39, date:'2025-11-22', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:18.6, bottomTime:38, airIn:210, airOut:90,  temp:11, vis:2, suit:'7mm Wetsuit', weights:8,  notes:'Visibility down to 4m but loads of wrasse. Good dive despite the conditions.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:3, wentWell:'', toImprove:'', marineLife:'' },
-  { id:'lg3', calItemId:null, num:40, date:'2025-12-06', site:'Bembridge Ledges',buddy:'Mike C',   maxDepth:12.4, bottomTime:35, airIn:200, airOut:95,  temp:10, vis:2, suit:'7mm Wetsuit', weights:9,  notes:'Cold but worth it. Found an old anchor chain near the ledge.',                                      rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:4, wentWell:'', toImprove:'', marineLife:'' },
-  { id:'lg4', calItemId:null, num:41, date:'2026-01-10', site:'Stokes Bay',      buddy:'Paul T',   maxDepth:16.8, bottomTime:45, airIn:210, airOut:70,  temp:9,  vis:3, suit:'Drysuit',     weights:12, notes:'First drysuit dive of the year. Jellyfish everywhere! Excellent visibility — easily 8m+.',           rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:4, wentWell:'', toImprove:'', marineLife:'' },
-  { id:'lg5', calItemId:null, num:42, date:'2026-01-24', site:'Forts Wreck',     buddy:'Liz F',    maxDepth:22.1, bottomTime:32, airIn:210, airOut:100, temp:8,  vis:5, suit:'Drysuit',     weights:12, notes:'Deep one today. The wreck is stunning at 22m. Massive conger eel under the hull.',                 rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:5, buoyancy:5, wentWell:'', toImprove:'', marineLife:'' },
-  { id:'lg6', calItemId:null, num:43, date:'2026-02-07', site:'Bembridge Ledges',buddy:'Chris B',  maxDepth:11.8, bottomTime:48, airIn:200, airOut:85,  temp:8,  vis:1, suit:'Drysuit',     weights:12, notes:'Viz only 2m but a lovely swim-through at the main ledge. Lots of spider crabs.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'' },
-  { id:'lg7', calItemId:'d1', num:44, date:'2026-02-14', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'' },
-  { id:'lg8', calItemId:'d2', num:45, date:'2026-02-21', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'' },
+  { id:'lg1', calItemId:null, num:38, date:'2025-11-08', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:14.2, bottomTime:42, airIn:200, airOut:80,  temp:12, vis:3, suit:'7mm Wetsuit', weights:8,  notes:'Great viz today — saw a cuttlefish sheltering near the rocks. Slight current on the return.',      rating:4, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good' },
+  { id:'lg2', calItemId:null, num:39, date:'2025-11-22', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:18.6, bottomTime:38, airIn:210, airOut:90,  temp:11, vis:2, suit:'7mm Wetsuit', weights:8,  notes:'Visibility down to 4m but loads of wrasse. Good dive despite the conditions.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good' },
+  { id:'lg3', calItemId:null, num:40, date:'2025-12-06', site:'Bembridge Ledges',buddy:'Mike C',   maxDepth:12.4, bottomTime:35, airIn:200, airOut:95,  temp:10, vis:2, suit:'7mm Wetsuit', weights:9,  notes:'Cold but worth it. Found an old anchor chain near the ledge.',                                      rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:4, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good' },
+  { id:'lg4', calItemId:null, num:41, date:'2026-01-10', site:'Stokes Bay',      buddy:'Paul T',   maxDepth:16.8, bottomTime:45, airIn:210, airOut:70,  temp:9,  vis:3, suit:'Drysuit',     weights:12, notes:'First drysuit dive of the year. Jellyfish everywhere! Excellent visibility — easily 8m+.',           rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:4, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good' },
+  { id:'lg5', calItemId:null, num:42, date:'2026-01-24', site:'Forts Wreck',     buddy:'Liz F',    maxDepth:22.1, bottomTime:32, airIn:210, airOut:100, temp:8,  vis:5, suit:'Drysuit',     weights:12, notes:'Deep one today. The wreck is stunning at 22m. Massive conger eel under the hull.',                 rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:5, buoyancy:5, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good' },
+  { id:'lg6', calItemId:null, num:43, date:'2026-02-07', site:'Bembridge Ledges',buddy:'Chris B',  maxDepth:11.8, bottomTime:48, airIn:200, airOut:85,  temp:8,  vis:1, suit:'Drysuit',     weights:12, notes:'Viz only 2m but a lovely swim-through at the main ledge. Lots of spider crabs.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good' },
+  { id:'lg7', calItemId:'d1', num:44, date:'2026-02-14', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good' },
+  { id:'lg8', calItemId:'d2', num:45, date:'2026-02-21', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good' },
 ];
 
 const NOTICE_COLORS = {
@@ -3671,6 +3689,18 @@ renderSites();       // pre-render sites in background
           <div class="log-rating-lbl">Rating</div>
           <div class="log-rating-stars" id="logRatingStars">${starsHtml}</div>
         </div>
+        <div class="log-gear-row ${!log.gearCheck || log.gearCheck === 'All good' ? 'ok' : 'issue'}" id="lfGearRow" style="border-top:0.5px solid var(--sep);" onclick="document.getElementById('lf-gear').focus()">
+          <div class="log-gear-ico" id="lfGearIco">${!log.gearCheck || log.gearCheck === 'All good' ? '✅' : '⚠️'}</div>
+          <input
+            class="log-gear-inp ${!log.gearCheck || log.gearCheck === 'All good' ? 'ok' : 'issue'}"
+            type="text" id="lf-gear"
+            placeholder="Flag any gear issues"
+            value="${log.gearCheck || 'All good'}"
+            maxlength="120"
+            oninput="updateGearCheck()"
+            onfocus="if(this.value.trim()==='All good'){this.value='';updateGearCheck();}"
+            onblur="if(this.value.trim()===''){this.value='All good';updateGearCheck();}">
+        </div>
       </div>
 
       <!-- OPTIONAL: Gas & Cylinder -->
@@ -3845,6 +3875,21 @@ renderSites();       // pre-render sites in background
     if (buoyEl) buoyEl.textContent = buoyLabels[buoyVal] || '';
   }
 
+  function updateGearCheck() {
+    const inp = document.getElementById('lf-gear');
+    const ico = document.getElementById('lfGearIco');
+    const row = document.getElementById('lfGearRow');
+    if (!inp || !ico || !row) return;
+    const val  = inp.value.trim();
+    const isOk = !val || val.toLowerCase() === 'all good';
+    ico.textContent = isOk ? '✅' : '⚠️';
+    row.className   = 'log-gear-row ' + (isOk ? 'ok' : 'issue');
+    inp.className   = 'log-gear-inp ' + (isOk ? 'ok' : 'issue');
+    // auto-save into state
+    const log = S.logs.find(l => l.id === S.editingLogId);
+    if (log) log.gearCheck = val || 'All good';
+  }
+
   function calcSAC(airIn, airOut, cylLitres, maxDepth, diveTime) {
     if (!airIn || !airOut || !cylLitres || !maxDepth || !diveTime) return null;
     if (airIn <= airOut || diveTime <= 0) return null;
@@ -3943,6 +3988,7 @@ renderSites();       // pre-render sites in background
     log.wentWell      = v('lf-wentwell') || '';
     log.toImprove     = v('lf-improve') || '';
     log.marineLife    = v('lf-marine') || '';
+    log.gearCheck     = v('lf-gear') || 'All good';
     // SAC auto-calc
     log.sac = calcSAC(log.airIn, log.airOut, log.cylinderSize, log.maxDepth, log.bottomTime);
   }

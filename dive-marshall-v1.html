@@ -944,6 +944,14 @@
     .tw-weather-icon { font-size: 22px; line-height: 1; margin-bottom: 4px; }
     .tw-weather-main { font-size: 14px; font-weight: 600; color: var(--txt1); margin-bottom: 2px; }
     .tw-weather-meta { font-size: 11px; color: var(--txt3); line-height: 1.5; }
+    .tw-tide-amp { font-size: 11px; color: var(--txt3); font-weight: 500; margin-left: 5px; }
+    .tw-wx-row { display: flex; align-items: center; gap: 5px; margin-top: 5px; font-size: 12px; }
+    .tw-wx-arrow { color: var(--navy); font-size: 13px; width: 14px; text-align: center; }
+    .tw-wx-label { color: var(--txt2); flex: 1; }
+    .tw-wx-val { font-weight: 700; }
+    .tw-wx-val.calm { color: var(--green); }
+    .tw-wx-val.mod  { color: var(--amber); }
+    .tw-wx-val.str  { color: var(--red); }
     /* Collapsed strip (Quick-Add, panel not expanded) */
     .tw-strip {
       display: flex; align-items: center; gap: 10px; padding: 10px 14px;
@@ -2242,12 +2250,10 @@ function renderMonthGrid() {
       }
 
       const hasNotice = noticesOn(ds).length > 0;
-      const envHtml   = buildCalEnvHtml(ds, dayItems);
       html += `<div class="${cls}" data-d="${ds}" onclick="pickDateTide('${ds}',this)" onmouseenter="showTideTip('${ds}',this)" onmouseleave="hideTideTip(200)">
         <div class="dc-num">${d.getDate()}</div>
         ${evHtml}
         ${hasNotice ? `<div class="dc-notice-dot"></div>` : ''}
-        ${envHtml}
       </div>`;
     });
     html += `</div>`;
@@ -2275,12 +2281,10 @@ function renderWeekStrip() {
     }
 
     const hasNotice = noticesOn(ds).length > 0;
-    const envHtml   = buildCalEnvHtml(ds, dayItems);
     html += `<div class="${cls}" data-d="${ds}" onclick="pickDateTide('${ds}',this)" onmouseenter="showTideTip('${ds}',this)" onmouseleave="hideTideTip(200)">
       <div class="dc-num">${d.getDate()}</div>
       ${evHtml}
       ${hasNotice ? `<div class="dc-notice-dot"></div>` : ''}
-      ${envHtml}
     </div>`;
     cur.setDate(cur.getDate()+1);
   }
@@ -2914,16 +2918,41 @@ function buildTideWeatherPanel(dateStr, mode) {
       </div>
       <div class="tw-tide-item" style="padding-bottom:3px;align-self:flex-end">
         <span class="tide-badge-sm ${td.sp?'sp':'np'}">${td.sp?'Spring':'Neap'}</span>
+        ${td.amp ? `<span class="tw-tide-amp">↕ ${td.amp}m</span>` : ''}
       </div>
     </div>
   </div>` : '';
 
-  const weatherHtml = wd ? `<div class="tw-section">
+  let weatherHtml = '';
+  if (wd) {
+    const wParts = (wd.wind || '').split(' ');
+    const wDir   = wParts[0] || '';
+    const wSpd   = parseInt(wParts[1]) || 0;
+    const da     = { N:'↑', NE:'↗', E:'→', SE:'↘', S:'↓', SW:'↙', W:'←', NW:'↖' };
+    const wArrow = da[wDir] || '→';
+    const wCls   = wSpd <= 10 ? 'calm' : wSpd <= 20 ? 'mod' : 'str';
+    const dItems = itemsOn(dateStr);
+    const fDive  = dItems.find(it => it.itemType === 'dive');
+    const selHr  = Math.min(21, Math.max(6, parseInt((fDive?.time || '09:00').split(':')[0])));
+    const hourly = hourlyWeatherFor(dateStr, wd);
+    const hData  = hourly.find(h => h.hr === selHr) || hourly[0];
+    weatherHtml = `<div class="tw-section">
     <div class="tw-section-lbl">🌤 Forecast</div>
     <div class="tw-weather-icon">${wd.icon}</div>
-    <div class="tw-weather-main">${wd.summary}</div>
-    <div class="tw-weather-meta">${wd.temp}°C · ${wd.wind}<br>Vis: ${wd.vis}</div>
-  </div>` : '';
+    <div class="tw-weather-main">${wd.summary} · ${wd.temp}°C</div>
+    <div class="tw-wx-row">
+      <span class="tw-wx-arrow">${wArrow}</span>
+      <span class="tw-wx-label">${wDir} Wind</span>
+      <span class="tw-wx-val ${wCls}">${wSpd}kt</span>
+    </div>
+    ${hData ? `<div class="tw-wx-row">
+      <span class="tw-wx-arrow">${hData.swellArrow}</span>
+      <span class="tw-wx-label">${hData.swellDir} Swell</span>
+      <span class="tw-wx-val ${hData.swellCls}">${hData.swellHgt}m</span>
+    </div>` : ''}
+    <div class="tw-weather-meta" style="margin-top:4px">Vis: ${wd.vis}</div>
+  </div>`;
+  }
 
   return `<div class="tw-panel">${tidesHtml}${td&&wd?'<div class="tw-divider"></div>':''}${weatherHtml}</div>`;
 }

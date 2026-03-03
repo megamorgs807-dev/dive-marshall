@@ -1239,31 +1239,44 @@
   .adp-tide-amp { font-size: 11px; font-weight: 600; color: var(--txt3); }
 
   /* Wind & weather strip */
-  .adp-wx-strip { display: flex; align-items: center; padding: 10px 16px 11px; border-top: 0.5px solid var(--sep); gap: 0; }
-  .adp-wx-wind { display: flex; align-items: center; gap: 7px; flex: 0 0 auto; }
-  .adp-wx-arrow { font-size: 20px; color: var(--navy); line-height: 1; }
+  /* Wind & weather strip */
+  .adp-wx-strip { display: flex; align-items: center; padding: 9px 14px 10px; border-top: 0.5px solid var(--sep); gap: 0; }
+  .adp-wx-wind { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+  .adp-wx-arrow { font-size: 17px; color: var(--navy); line-height: 1; }
   .adp-wx-wind-col { display: flex; flex-direction: column; gap: 1px; }
-  .adp-wx-dir-lbl { font-size: 10px; color: var(--txt3); line-height: 1; }
+  .adp-wx-dir-lbl { font-size: 9px; color: var(--txt3); line-height: 1; }
   .adp-wx-spd-row { display: flex; align-items: baseline; gap: 2px; }
-  .adp-wx-spd { font-size: 16px; font-weight: 800; line-height: 1; letter-spacing: -0.3px; }
+  .adp-wx-spd { font-size: 14px; font-weight: 800; line-height: 1; letter-spacing: -0.3px; }
   .adp-wx-spd.calm { color: var(--green); }
   .adp-wx-spd.mod  { color: var(--amber); }
   .adp-wx-spd.str  { color: var(--red); }
-  .adp-wx-spd-unit { font-size: 10px; color: var(--txt3); }
-  .adp-wx-div { width: 0.5px; background: var(--sep); height: 28px; margin: 0 12px; flex-shrink: 0; }
-  .adp-wx-cond { display: flex; align-items: center; gap: 5px; flex: 1; }
-  .adp-wx-cond-ico { font-size: 18px; }
-  .adp-wx-cond-lbl { font-size: 12px; color: var(--txt2); line-height: 1.3; }
-  .adp-wx-hourly-btn { margin-left: auto; background: none; border: none; font-size: 11px; color: var(--navy); font-weight: 600; cursor: pointer; padding: 5px 0 5px 10px; font-family: inherit; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
+  .adp-wx-spd-unit { font-size: 9px; color: var(--txt3); }
+  .adp-wx-div { width: 0.5px; background: var(--sep); height: 26px; margin: 0 9px; flex-shrink: 0; }
+  .adp-wx-swell { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+  .adp-wx-swell-col { display: flex; flex-direction: column; gap: 1px; }
+  .adp-wx-swell-lbl { font-size: 9px; color: var(--txt3); line-height: 1; }
+  .adp-wx-swell-row { display: flex; align-items: baseline; gap: 2px; }
+  .adp-wx-swell-hgt { font-size: 14px; font-weight: 800; line-height: 1; letter-spacing: -0.3px; }
+  .adp-wx-swell-hgt.calm { color: var(--green); }
+  .adp-wx-swell-hgt.mod  { color: var(--amber); }
+  .adp-wx-swell-hgt.str  { color: var(--red); }
+  .adp-wx-swell-unit { font-size: 9px; color: var(--txt3); }
+  .adp-wx-cond { display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0; }
+  .adp-wx-cond-right { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .adp-wx-cond-ico { font-size: 16px; }
+  .adp-wx-cond-lbl { font-size: 11px; color: var(--txt2); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .adp-wx-time-chip { font-size: 9px; color: var(--navy); font-weight: 700; }
+  .adp-wx-hourly-btn { margin-left: auto; background: none; border: none; font-size: 11px; color: var(--navy); font-weight: 600; cursor: pointer; padding: 5px 0 5px 8px; font-family: inherit; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
   .adp-wx-hourly-btn .wx-chev { display: inline-block; transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1); font-size: 14px; }
   .adp-wx-hourly-btn.open .wx-chev { transform: rotate(90deg); }
 
   /* Hourly forecast */
   .adp-hourly-body { max-height: 0; overflow: hidden; transition: max-height 0.32s cubic-bezier(0.4,0,0.2,1); }
-  .adp-hourly-body.open { max-height: 130px; }
+  .adp-hourly-body.open { max-height: 165px; }
   .adp-hourly-scroll { display: flex; overflow-x: auto; padding: 8px 12px 10px; gap: 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-top: 0.5px solid var(--sep); }
   .adp-hourly-scroll::-webkit-scrollbar { display: none; }
-  .adp-hourly-card { flex-shrink: 0; width: 52px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 4px; border-radius: 10px; background: var(--grey5); margin-right: 5px; }
+  .adp-hourly-card { flex-shrink: 0; width: 52px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 4px; border-radius: 10px; background: var(--grey5); margin-right: 5px; transition: background 0.15s; }
+  .adp-hourly-card.selected { background: rgba(0,105,192,0.12); outline: 1.5px solid rgba(0,105,192,0.45); }
   .adp-hourly-time { font-size: 9px; color: var(--txt3); font-weight: 600; }
   .adp-hourly-ico { font-size: 15px; line-height: 1; }
   .adp-hourly-arrow { font-size: 13px; color: var(--navy); line-height: 1; }
@@ -1272,6 +1285,10 @@
   .adp-hourly-spd.mod  { color: var(--amber); }
   .adp-hourly-spd.str  { color: var(--red); }
   .adp-hourly-unit { font-size: 9px; color: var(--txt3); }
+  .adp-hourly-swell { font-size: 10px; font-weight: 700; line-height: 1; }
+  .adp-hourly-swell.calm { color: var(--green); }
+  .adp-hourly-swell.mod  { color: var(--amber); }
+  .adp-hourly-swell.str  { color: var(--red); }
 
     /* Goal pills */
     .adp-goal-row { display: flex; gap: 6px; padding: 10px 16px 12px; border-top: 0.5px solid var(--sep); flex-wrap: wrap; }
@@ -2678,25 +2695,36 @@ function hourlyWeatherFor(dateStr, wd) {
   const iconSet = isRainy ? rainIcons : isClear ? clearIcons : cloudyIcons;
   let h = 0;
   for (let i = 0; i < dateStr.length; i++) h = (h * 31 + dateStr.charCodeAt(i)) >>> 0;
-  const baseIdx = dirs.indexOf(baseDir) >= 0 ? dirs.indexOf(baseDir) : (h % 8);
+  const baseIdx      = dirs.indexOf(baseDir) >= 0 ? dirs.indexOf(baseDir) : (h % 8);
+  // Swell: stable direction per day, small hourly height variation (realistic for UK/Solent)
+  const swellBaseIdx = (h >> 10) % 8;
+  const swellBaseHgt = 0.3 + ((h >> 5) % 13) * 0.1;  // 0.3–1.5m
   return Array.from({ length: 16 }, (_, idx) => {
-    const hr    = 6 + idx;
-    const hh    = ((h ^ (hr * 2654435761)) >>> 0);
-    const dOff  = (hh % 3) - 1;
-    const hdIdx = (baseIdx + dOff + 8) % 8;
-    const hspd  = Math.max(1, baseSpd + ((hh >> 4) % 9) - 4);
+    const hr        = 6 + idx;
+    const hh        = ((h ^ (hr * 2654435761)) >>> 0);
+    const dOff      = (hh % 3) - 1;
+    const hdIdx     = (baseIdx + dOff + 8) % 8;
+    const hspd      = Math.max(1, baseSpd + ((hh >> 4) % 9) - 4);
+    const sdOff     = ((hh >> 18) % 3) - 1;
+    const swellIdx  = (swellBaseIdx + sdOff + 8) % 8;
+    const swellHgt  = Math.max(0.2, Math.round((swellBaseHgt + ((hh >> 20) % 5) * 0.1 - 0.2) * 10) / 10);
     return {
       hr,
-      arrow:  arrows[hdIdx],
-      spd:    hspd,
-      icon:   iconSet[hh % iconSet.length],
-      spdCls: hspd <= 10 ? 'calm' : hspd <= 20 ? 'mod' : 'str'
+      dir:        dirs[hdIdx],
+      arrow:      arrows[hdIdx],
+      spd:        hspd,
+      icon:       iconSet[hh % iconSet.length],
+      spdCls:     hspd <= 10 ? 'calm' : hspd <= 20 ? 'mod' : 'str',
+      swellDir:   dirs[swellIdx],
+      swellArrow: arrows[swellIdx],
+      swellHgt,
+      swellCls:   swellHgt <= 0.5 ? 'calm' : swellHgt <= 1.2 ? 'mod' : 'str'
     };
   });
 }
 
 // Build the full environment HTML for plannerTideRow (tide strip + weather strip + hourly)
-function buildPlannerEnvHtml(dateStr) {
+function buildPlannerEnvHtml(dateStr, timeStr) {
   if (!dateStr) return '';
   const td = divingTides(dateStr);
   const wd = weatherFor(dateStr);
@@ -2712,39 +2740,52 @@ function buildPlannerEnvHtml(dateStr) {
 
   if (!wd) return tideStrip;
 
-  const wParts = (wd.wind || '').split(' ');
-  const wDir   = wParts[0] || '—';
-  const wSpd   = parseInt(wParts[1]) || 0;
-  const spdCls = wSpd <= 10 ? 'calm' : wSpd <= 20 ? 'mod' : 'str';
-  const dirMap = { N:'↑', NE:'↗', E:'→', SE:'↘', S:'↓', SW:'↙', W:'←', NW:'↖' };
-  const arrow  = dirMap[wDir] || '→';
-
   const hourly = hourlyWeatherFor(dateStr, wd);
-  const cards  = hourly.map(h => `
-    <div class="adp-hourly-card">
+  // Use selected hour's data for wind/swell display; default 09:00
+  const selHr  = timeStr ? Math.min(21, Math.max(6, parseInt(timeStr.split(':')[0]))) : 9;
+  const hData  = hourly.find(h => h.hr === selHr) || hourly[0];
+  const timeLabel = `at ${String(selHr).padStart(2,'0')}:00`;
+
+  const cards = hourly.map(h => `
+    <div class="adp-hourly-card${h.hr === selHr ? ' selected' : ''}" data-hr="${h.hr}">
       <div class="adp-hourly-time">${String(h.hr).padStart(2,'0')}:00</div>
       <div class="adp-hourly-ico">${h.icon}</div>
       <div class="adp-hourly-arrow">${h.arrow}</div>
       <div class="adp-hourly-spd ${h.spdCls}">${h.spd}</div>
       <div class="adp-hourly-unit">kts</div>
+      <div class="adp-hourly-swell ${h.swellCls}">${h.swellHgt}m</div>
     </div>`).join('');
 
   return `${tideStrip}
     <div class="adp-wx-strip">
       <div class="adp-wx-wind">
-        <div class="adp-wx-arrow">${arrow}</div>
+        <div class="adp-wx-arrow" id="plannerWindArrow">${hData.arrow}</div>
         <div class="adp-wx-wind-col">
-          <div class="adp-wx-dir-lbl">${wDir} Wind</div>
+          <div class="adp-wx-dir-lbl" id="plannerWindLbl">${hData.dir} Wind</div>
           <div class="adp-wx-spd-row">
-            <span class="adp-wx-spd ${spdCls}">${wSpd}</span>
+            <span class="adp-wx-spd ${hData.spdCls}" id="plannerWindSpd">${hData.spd}</span>
             <span class="adp-wx-spd-unit">kts</span>
+          </div>
+        </div>
+      </div>
+      <div class="adp-wx-div"></div>
+      <div class="adp-wx-swell">
+        <div class="adp-wx-arrow" id="plannerSwellArrow">${hData.swellArrow}</div>
+        <div class="adp-wx-swell-col">
+          <div class="adp-wx-swell-lbl" id="plannerSwellLbl">${hData.swellDir} Swell</div>
+          <div class="adp-wx-swell-row">
+            <span class="adp-wx-swell-hgt ${hData.swellCls}" id="plannerSwellHgt">${hData.swellHgt}</span>
+            <span class="adp-wx-swell-unit">m</span>
           </div>
         </div>
       </div>
       <div class="adp-wx-div"></div>
       <div class="adp-wx-cond">
         <span class="adp-wx-cond-ico">${wd.icon}</span>
-        <span class="adp-wx-cond-lbl">${wd.summary}</span>
+        <div class="adp-wx-cond-right">
+          <span class="adp-wx-cond-lbl">${wd.summary}</span>
+          <span class="adp-wx-time-chip" id="plannerTimeChip">${timeLabel}</span>
+        </div>
       </div>
       <button class="adp-wx-hourly-btn" id="adpHourlyBtn" onclick="toggleAdpHourly()">
         Hourly <span class="wx-chev">›</span>
@@ -3429,7 +3470,7 @@ function renderAddStep2() {
     const todayStr = isoDate(TODAY);
 
     // Tide, weather & hourly env strip for selected date
-    const tideHtml = buildPlannerEnvHtml(f.date);
+    const tideHtml = buildPlannerEnvHtml(f.date, f.time);
 
     const shoreLogistics = `
       <div class="adp-opt-inner">
@@ -3475,7 +3516,7 @@ function renderAddStep2() {
 
         <div class="f-row">
           <div class="f-lbl">Time</div>
-          <input class="f-inp" type="time" id="af-time" value="${f.time||'09:00'}" onchange="saveAddFields()">
+          <input class="f-inp" type="time" id="af-time" value="${f.time||'09:00'}" onchange="saveAddFields();updatePlannerTime()">
         </div>
 
         <div class="f-row" style="flex-direction:column; align-items:stretch; gap:8px; padding-bottom:14px;">
@@ -4267,10 +4308,41 @@ renderSites();       // pre-render sites in background
 
   function updatePlannerTide() {
     const date = document.getElementById('af-date')?.value;
+    const time = document.getElementById('af-time')?.value;
     if (!date) return;
     S.addFlow.date = date;
     const row = document.getElementById('plannerTideRow');
-    if (row) row.innerHTML = buildPlannerEnvHtml(date);
+    if (row) row.innerHTML = buildPlannerEnvHtml(date, time);
+  }
+
+  // Called when dive time changes — updates wind/swell values in-place
+  // without re-rendering the whole strip (preserves hourly bar open/closed state)
+  function updatePlannerTime() {
+    const timeStr = document.getElementById('af-time')?.value;
+    const dateStr = S.addFlow.date;
+    saveAddFields();
+    if (!timeStr || !dateStr) return;
+    const wd = weatherFor(dateStr);
+    if (!wd) return;
+    const hourly = hourlyWeatherFor(dateStr, wd);
+    const selHr  = Math.min(21, Math.max(6, parseInt(timeStr.split(':')[0])));
+    const hData  = hourly.find(h => h.hr === selHr) || hourly[0];
+    if (!hData) return;
+    const el = id => document.getElementById(id);
+    // Wind
+    if (el('plannerWindArrow')) el('plannerWindArrow').textContent = hData.arrow;
+    if (el('plannerWindLbl'))   el('plannerWindLbl').textContent   = `${hData.dir} Wind`;
+    if (el('plannerWindSpd'))   { el('plannerWindSpd').textContent = hData.spd; el('plannerWindSpd').className = `adp-wx-spd ${hData.spdCls}`; }
+    // Swell
+    if (el('plannerSwellArrow')) el('plannerSwellArrow').textContent = hData.swellArrow;
+    if (el('plannerSwellLbl'))   el('plannerSwellLbl').textContent   = `${hData.swellDir} Swell`;
+    if (el('plannerSwellHgt'))   { el('plannerSwellHgt').textContent = hData.swellHgt; el('plannerSwellHgt').className = `adp-wx-swell-hgt ${hData.swellCls}`; }
+    // Time chip
+    if (el('plannerTimeChip')) el('plannerTimeChip').textContent = `at ${timeStr.slice(0, 5)}`;
+    // Highlight selected hour card in hourly bar
+    document.querySelectorAll('.adp-hourly-card').forEach(card => {
+      card.classList.toggle('selected', Number(card.dataset.hr) === selHr);
+    });
   }
 
   function setGasType(type) {

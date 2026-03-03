@@ -1116,6 +1116,65 @@
     .log-empty-ico { font-size: 40px; margin-bottom: 10px; }
     .log-empty-txt { font-size: 16px; font-weight: 600; color: var(--txt2); margin-bottom: 6px; }
     .log-empty-sub { font-size: 14px; line-height: 1.5; }
+
+    /* ── Logbook form: sliders ── */
+    .log-slider-wrap { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .log-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: var(--grey4); outline: none; cursor: pointer; }
+    .log-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--navy); cursor: pointer; box-shadow: 0 1px 6px rgba(0,30,60,0.3); transition: transform 0.1s; }
+    .log-slider::-webkit-slider-thumb:active { transform: scale(1.15); }
+    .log-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--navy); cursor: pointer; border: none; box-shadow: 0 1px 6px rgba(0,30,60,0.3); }
+    .log-slider-labels { display: flex; justify-content: space-between; }
+    .log-slider-lbl { font-size: 9px; color: var(--txt3); font-weight: 500; }
+    .log-slider-val { font-size: 13px; font-weight: 700; color: var(--navy); text-align: right; min-width: 90px; }
+
+    /* Gas toggle */
+    .log-gas-toggle { display: flex; background: var(--grey5); border-radius: 10px; padding: 2px; gap: 2px; }
+    .log-gas-opt { flex: 1; padding: 6px 4px; border-radius: 8px; border: none; background: transparent; font-size: 13px; font-weight: 500; color: var(--txt3); cursor: pointer; font-family: inherit; transition: all 0.15s; text-align: center; }
+    .log-gas-opt.active { background: var(--navy); color: #fff; font-weight: 700; box-shadow: 0 1px 4px rgba(0,30,60,0.2); }
+    .log-nitrox-row { display: flex; align-items: center; padding: 10px 16px; border-top: 0.5px solid var(--sep); gap: 12px; }
+
+    /* SAC display */
+    .log-sac-display { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: rgba(0,105,192,0.05); border-radius: 10px; margin: 0 16px 14px; }
+    .log-sac-left { display: flex; flex-direction: column; gap: 2px; }
+    .log-sac-label { font-size: 10px; font-weight: 700; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.5px; }
+    .log-sac-value { font-size: 22px; font-weight: 800; color: var(--navy); letter-spacing: -0.8px; line-height: 1; }
+    .log-sac-unit { font-size: 12px; font-weight: 500; color: var(--txt3); margin-top: 1px; }
+    .log-sac-trend { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+    .log-sac-trend-arrow { font-size: 20px; font-weight: 800; }
+    .log-sac-trend-arrow.good { color: var(--green); }
+    .log-sac-trend-arrow.warn { color: var(--amber); }
+    .log-sac-trend-arrow.same { color: var(--txt3); }
+    .log-sac-trend-txt { font-size: 10px; color: var(--txt3); text-align: right; }
+
+    /* Optional collapsible sections */
+    .log-optional-sec { margin-bottom: 12px; }
+    .log-optional-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; background: var(--card); border-radius: var(--r);
+      cursor: pointer; box-shadow: 0 1px 3px rgba(0,30,60,0.06);
+      transition: background 0.15s;
+    }
+    .log-optional-hdr:active { background: var(--grey5); }
+    .log-optional-hdr-left { display: flex; align-items: center; gap: 10px; }
+    .log-optional-hdr-ico { font-size: 16px; }
+    .log-optional-hdr-txt { font-size: 15px; font-weight: 600; color: var(--txt1); }
+    .log-optional-hdr-sub { font-size: 12px; color: var(--txt3); margin-top: 1px; }
+    .log-optional-chev { color: var(--grey3); font-size: 16px; transition: transform 0.25s cubic-bezier(0.34,1.2,0.64,1); }
+    .log-optional-sec.open .log-optional-chev { transform: rotate(90deg); }
+    .log-optional-body { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+    .log-optional-sec.open .log-optional-body { max-height: 600px; }
+    .log-optional-inner { background: var(--card); border-radius: 0 0 var(--r) var(--r); box-shadow: 0 2px 6px rgba(0,30,60,0.07); margin-top: -4px; padding-top: 4px; overflow: hidden; }
+
+    /* Quick save banner */
+    .log-quick-save-row { display: flex; gap: 10px; margin-bottom: 16px; }
+    .log-btn-quick { flex: 1; padding: 13px; border: 1.5px solid var(--navy); background: transparent; color: var(--navy); border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .log-btn-quick:active { background: rgba(0,105,192,0.08); }
+    .log-btn-complete { flex: 2; padding: 13px; background: linear-gradient(180deg,var(--green) 0%,#14532d 100%); color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 2px 8px rgba(20,83,45,0.22); transition: opacity 0.15s, transform 0.1s; }
+    .log-btn-complete:active { opacity: 0.88; transform: scale(0.99); }
+
+    /* Vis label display */
+    .log-vis-label { font-size: 13px; font-weight: 600; color: var(--navy); min-width: 100px; text-align: right; }
+    .log-skill-label { font-size: 13px; font-weight: 600; color: var(--navy); min-width: 40px; text-align: right; }
   </style>
 </head>
 <body>
@@ -1412,14 +1471,14 @@ const RAW_ITEMS = [
 ];
 
 const RAW_LOGS = [
-  { id:'lg1', calItemId:null, num:38, date:'2025-11-08', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:14.2, bottomTime:42, airIn:200, airOut:80,  temp:12, vis:'Good',      suit:'7mm Wetsuit', weights:8,  notes:'Great viz today — saw a cuttlefish sheltering near the rocks. Slight current on the return.',      rating:4, status:'completed' },
-  { id:'lg2', calItemId:null, num:39, date:'2025-11-22', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:18.6, bottomTime:38, airIn:210, airOut:90,  temp:11, vis:'Fair',      suit:'7mm Wetsuit', weights:8,  notes:'Visibility down to 4m but loads of wrasse. Good dive despite the conditions.',                    rating:3, status:'completed' },
-  { id:'lg3', calItemId:null, num:40, date:'2025-12-06', site:'Bembridge Ledges',buddy:'Mike C',   maxDepth:12.4, bottomTime:35, airIn:200, airOut:95,  temp:10, vis:'Fair',      suit:'7mm Wetsuit', weights:9,  notes:'Cold but worth it. Found an old anchor chain near the ledge.',                                      rating:3, status:'completed' },
-  { id:'lg4', calItemId:null, num:41, date:'2026-01-10', site:'Stokes Bay',      buddy:'Paul T',   maxDepth:16.8, bottomTime:45, airIn:210, airOut:70,  temp:9,  vis:'Good',      suit:'Drysuit',     weights:12, notes:'First drysuit dive of the year. Jellyfish everywhere! Excellent visibility — easily 8m+.',           rating:5, status:'completed' },
-  { id:'lg5', calItemId:null, num:42, date:'2026-01-24', site:'Forts Wreck',     buddy:'Liz F',    maxDepth:22.1, bottomTime:32, airIn:210, airOut:100, temp:8,  vis:'Excellent', suit:'Drysuit',     weights:12, notes:'Deep one today. The wreck is stunning at 22m. Massive conger eel under the hull.',                 rating:5, status:'completed' },
-  { id:'lg6', calItemId:null, num:43, date:'2026-02-07', site:'Bembridge Ledges',buddy:'Chris B',  maxDepth:11.8, bottomTime:48, airIn:200, airOut:85,  temp:8,  vis:'Poor',      suit:'Drysuit',     weights:12, notes:'Viz only 2m but a lovely swim-through at the main ledge. Lots of spider crabs.',                    rating:3, status:'completed' },
-  { id:'lg7', calItemId:'d1', num:44, date:'2026-02-14', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null,   suit:null,          weights:null, notes:'', rating:null, status:'pending' },
-  { id:'lg8', calItemId:'d2', num:45, date:'2026-02-21', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null,   suit:null,          weights:null, notes:'', rating:null, status:'pending' },
+  { id:'lg1', calItemId:null, num:38, date:'2025-11-08', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:14.2, bottomTime:42, airIn:200, airOut:80,  temp:12, vis:3, suit:'7mm Wetsuit', weights:8,  notes:'Great viz today — saw a cuttlefish sheltering near the rocks. Slight current on the return.',      rating:4, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'' },
+  { id:'lg2', calItemId:null, num:39, date:'2025-11-22', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:18.6, bottomTime:38, airIn:210, airOut:90,  temp:11, vis:2, suit:'7mm Wetsuit', weights:8,  notes:'Visibility down to 4m but loads of wrasse. Good dive despite the conditions.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:3, wentWell:'', toImprove:'', marineLife:'' },
+  { id:'lg3', calItemId:null, num:40, date:'2025-12-06', site:'Bembridge Ledges',buddy:'Mike C',   maxDepth:12.4, bottomTime:35, airIn:200, airOut:95,  temp:10, vis:2, suit:'7mm Wetsuit', weights:9,  notes:'Cold but worth it. Found an old anchor chain near the ledge.',                                      rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:4, wentWell:'', toImprove:'', marineLife:'' },
+  { id:'lg4', calItemId:null, num:41, date:'2026-01-10', site:'Stokes Bay',      buddy:'Paul T',   maxDepth:16.8, bottomTime:45, airIn:210, airOut:70,  temp:9,  vis:3, suit:'Drysuit',     weights:12, notes:'First drysuit dive of the year. Jellyfish everywhere! Excellent visibility — easily 8m+.',           rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:4, wentWell:'', toImprove:'', marineLife:'' },
+  { id:'lg5', calItemId:null, num:42, date:'2026-01-24', site:'Forts Wreck',     buddy:'Liz F',    maxDepth:22.1, bottomTime:32, airIn:210, airOut:100, temp:8,  vis:5, suit:'Drysuit',     weights:12, notes:'Deep one today. The wreck is stunning at 22m. Massive conger eel under the hull.',                 rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:5, buoyancy:5, wentWell:'', toImprove:'', marineLife:'' },
+  { id:'lg6', calItemId:null, num:43, date:'2026-02-07', site:'Bembridge Ledges',buddy:'Chris B',  maxDepth:11.8, bottomTime:48, airIn:200, airOut:85,  temp:8,  vis:1, suit:'Drysuit',     weights:12, notes:'Viz only 2m but a lovely swim-through at the main ledge. Lots of spider crabs.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'' },
+  { id:'lg7', calItemId:'d1', num:44, date:'2026-02-14', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'' },
+  { id:'lg8', calItemId:'d2', num:45, date:'2026-02-21', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'' },
 ];
 
 const NOTICE_COLORS = {
@@ -3469,7 +3528,7 @@ renderSites();       // pre-render sites in background
       <div class="log-card-stats">
         <div class="log-card-stat"><div class="log-card-stat-val">${l.maxDepth}m</div><div class="log-card-stat-lbl">Max Depth</div></div>
         <div class="log-card-stat"><div class="log-card-stat-val">${l.bottomTime}min</div><div class="log-card-stat-lbl">Bottom Time</div></div>
-        ${l.airIn && l.airOut ? `<div class="log-card-stat"><div class="log-card-stat-val">${l.airIn-l.airOut}bar</div><div class="log-card-stat-lbl">Air Used</div></div>` : ''}
+        ${l.sac ? `<div class="log-card-stat"><div class="log-card-stat-val">${l.sac}</div><div class="log-card-stat-lbl">SAC L/min</div></div>` : (l.airIn && l.airOut ? `<div class="log-card-stat"><div class="log-card-stat-val">${l.airIn-l.airOut}b</div><div class="log-card-stat-lbl">Air Used</div></div>` : '')}
         ${l.temp ? `<div class="log-card-stat"><div class="log-card-stat-val">${l.temp}°C</div><div class="log-card-stat-lbl">Temp</div></div>` : ''}
       </div>
       ${stars ? `<div class="log-card-rating">${[1,2,3,4,5].map(i=>`<span class="log-star">${i<=l.rating?'⭐':'☆'}</span>`).join('')}</div>` : ''}
@@ -3487,7 +3546,7 @@ renderSites();       // pre-render sites in background
           <div class="log-card-meta">
             <span>${dateStr}</span>
             ${l.buddy ? `<span class="log-card-meta-sep">·</span><span>👤 ${l.buddy}</span>` : ''}
-            ${!isPending && l.vis ? `<span class="log-card-meta-sep">·</span><span>👁 ${l.vis}</span>` : ''}
+            ${!isPending && l.vis ? `<span class="log-card-meta-sep">·</span><span>👁 ${['','Poor','Low','Moderate','Good','Excellent'][l.vis]||l.vis}</span>` : ''}
           </div>
           ${statsHtml}
         </div>
@@ -3500,107 +3559,310 @@ renderSites();       // pre-render sites in background
     S.editingLogId = id;
 
     const dateObj = new Date(log.date + 'T12:00:00');
-    const dateStr = dateObj.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    const dateStr  = dateObj.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
 
-    const airUsed = (log.airIn && log.airOut) ? log.airIn - log.airOut : null;
-    const calcHtml = airUsed ? `
-      <div class="log-calc-row">
-        <div class="log-calc-ico">⚡</div>
-        <div class="log-calc-txt">Air consumed</div>
-        <div class="log-calc-val">${airUsed} bar</div>
-      </div>` : '';
+    // Vis labels
+    const visLabels = ['','<1m — Poor','1–3m — Low','3–8m — Moderate','8–15m — Good','15m+ — Excellent'];
+    const visVal = log.vis || 3;
 
-    const visOpts = ['Poor','Fair','Good','Excellent'].map(v => `<option value="${v}"${log.vis===v?' selected':''}>${v}</option>`).join('');
-    const suitOpts = ['Wetsuit 3mm','Wetsuit 5mm','7mm Wetsuit','Drysuit','Shorty'].map(v => `<option value="${v}"${log.suit===v?' selected':''}>${v}</option>`).join('');
+    // Gas section
+    const gasType = log.gasType || 'air';
+    const cylSize = log.cylinderSize || 12;
+    const nitroxPct = log.nitroxPct || 32;
 
-    const starsHtml = [1,2,3,4,5].map(i => `<span class="log-rating-star${log.rating&&i<=log.rating?' lit':''}" onclick="setLogRating(${i})" data-star="${i}">⭐</span>`).join('');
+    // SAC calc
+    const sacResult = calcSAC(log.airIn, log.airOut, cylSize, log.maxDepth, log.bottomTime);
+    const sacTrend  = sacResult ? getSACTrend(sacResult, id) : null;
+    const sacHtml   = sacResult ? buildSACHtml(sacResult, sacTrend) : '';
 
-    const safetyNote = log.maxDepth && log.maxDepth > 10 ?
-      `<div class="log-calc-row"><div class="log-calc-ico">⚠️</div><div class="log-calc-txt">Safety stop recommended at 5m for 3 min</div></div>` : '';
+    // Stars
+    const starsHtml = [1,2,3,4,5].map(i =>
+      `<span class="log-rating-star${log.rating&&i<=log.rating?' lit':''}" onclick="setLogRating(${i})" data-star="${i}">⭐</span>`
+    ).join('');
+
+    // Skill labels
+    const confVal  = log.confidence || 3;
+    const buoyVal  = log.buoyancy   || 3;
+    const skillLabels = ['','⚡ Nervous','🙂 Developing','👍 Steady','💪 Confident','🌟 Excellent'];
+    const buoyLabels  = ['','⚓ Struggling','↕ Variable','👌 Okay','🐟 Good','✨ Perfect'];
 
     document.getElementById('logModalTitle').textContent = `Dive #${log.num}`;
     document.getElementById('logModalBody').innerHTML = `
+      <!-- Hero -->
       <div class="log-form-hero">
         <div class="log-form-hero-site">${log.site}</div>
         <div class="log-form-hero-meta">${dateStr}${log.buddy ? ' · 👤 ' + log.buddy : ''}</div>
         <div class="log-form-hero-num">DIVE #${log.num}</div>
       </div>
 
+      <!-- QUICK LOG -->
       <div class="log-form-section">
-        <div class="log-form-sec-lbl">Depth &amp; Time</div>
+        <div class="log-form-sec-lbl">Quick Log</div>
+
         <div class="log-f-row">
           <div class="log-f-lbl">Max Depth</div>
           <input class="log-f-inp" type="number" id="lf-depth" placeholder="—" value="${log.maxDepth||''}" min="0" max="60" step="0.1" oninput="updateLogCalc()">
           <span class="log-f-unit">m</span>
         </div>
+
         <div class="log-f-row">
-          <div class="log-f-lbl">Bottom Time</div>
+          <div class="log-f-lbl">Dive Time</div>
           <input class="log-f-inp" type="number" id="lf-bt" placeholder="—" value="${log.bottomTime||''}" min="0" max="180" step="1" oninput="updateLogCalc()">
           <span class="log-f-unit">min</span>
         </div>
-      </div>
 
-      <div class="log-form-section">
-        <div class="log-form-sec-lbl">Air</div>
         <div class="log-f-row">
-          <div class="log-f-lbl">Air In</div>
-          <input class="log-f-inp" type="number" id="lf-airin" placeholder="—" value="${log.airIn||''}" min="0" max="300" step="1" oninput="updateLogCalc()">
-          <span class="log-f-unit">bar</span>
+          <div class="log-f-lbl">Gas</div>
+          <div class="log-gas-toggle">
+            <button class="log-gas-opt${gasType==='air'?' active':''}" onclick="setGasType('air')">Air</button>
+            <button class="log-gas-opt${gasType==='nitrox'?' active':''}" onclick="setGasType('nitrox')">Nitrox</button>
+          </div>
         </div>
-        <div class="log-f-row">
-          <div class="log-f-lbl">Air Out</div>
-          <input class="log-f-inp" type="number" id="lf-airout" placeholder="—" value="${log.airOut||''}" min="0" max="300" step="1" oninput="updateLogCalc()">
-          <span class="log-f-unit">bar</span>
+        <div class="log-nitrox-row" id="lfNitroxRow" style="display:${gasType==='nitrox'?'flex':'none'}">
+          <div class="log-f-lbl">O₂ %</div>
+          <input class="log-f-inp" type="number" id="lf-nitrox" placeholder="32" value="${nitroxPct}" min="21" max="40" step="1">
+          <span class="log-f-unit">%</span>
         </div>
-      </div>
 
-      <div id="logCalcPanel">${calcHtml}${safetyNote}</div>
-
-      <div class="log-form-section">
-        <div class="log-form-sec-lbl">Conditions</div>
         <div class="log-f-row">
           <div class="log-f-lbl">Water Temp</div>
           <input class="log-f-inp" type="number" id="lf-temp" placeholder="—" value="${log.temp||''}" min="-2" max="35" step="0.5">
           <span class="log-f-unit">°C</span>
         </div>
-        <div class="log-f-row">
-          <div class="log-f-lbl">Visibility</div>
-          <select class="log-f-sel" id="lf-vis"><option value="">Select…</option>${visOpts}</select>
-        </div>
-        <div class="log-f-row">
-          <div class="log-f-lbl">Suit</div>
-          <select class="log-f-sel" id="lf-suit"><option value="">Select…</option>${suitOpts}</select>
-        </div>
-        <div class="log-f-row">
-          <div class="log-f-lbl">Weights</div>
-          <input class="log-f-inp" type="number" id="lf-weights" placeholder="—" value="${log.weights||''}" min="0" max="30" step="0.5">
-          <span class="log-f-unit">kg</span>
-        </div>
-      </div>
 
-      <div class="log-form-section">
-        <div class="log-form-sec-lbl">Notes</div>
-        <div class="log-f-row" style="align-items:flex-start;padding-top:14px;">
-          <textarea class="log-f-ta" id="lf-notes" placeholder="What did you see? How was the dive?">${log.notes||''}</textarea>
+        <div class="log-f-row" style="flex-direction:column; align-items:stretch; gap:10px; padding-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="log-f-lbl">Visibility</div>
+            <div class="log-vis-label" id="lfVisLabel">${visLabels[visVal]||visLabels[3]}</div>
+          </div>
+          <div class="log-slider-wrap">
+            <input class="log-slider" type="range" id="lf-vis" min="1" max="5" step="1" value="${visVal}" oninput="updateVisLabel()">
+            <div class="log-slider-labels">
+              <span class="log-slider-lbl">Poor</span>
+              <span class="log-slider-lbl">Excellent</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="log-form-section">
         <div class="log-rating-row">
           <div class="log-rating-lbl">Rating</div>
           <div class="log-rating-stars" id="logRatingStars">${starsHtml}</div>
         </div>
       </div>
 
-      <button class="log-complete-btn" onclick="completeLogEntry()">
-        ${log.status==='pending' ? '✓ Complete Log Entry' : '✓ Update Log Entry'}
-      </button>
-      <div class="log-save-draft" onclick="saveLogDraft()">Save draft</div>
+      <!-- Quick Save / Complete buttons -->
+      <div class="log-quick-save-row">
+        <button class="log-btn-quick" onclick="saveLogDraft()">Save Draft</button>
+        <button class="log-btn-complete" onclick="completeLogEntry()">${log.status==='pending'?'✓ Complete Log':'✓ Update Log'}</button>
+      </div>
+
+      <!-- OPTIONAL: Gas & Cylinder -->
+      <div class="log-optional-sec" id="optGas">
+        <div class="log-optional-hdr" onclick="toggleOptSec('optGas')">
+          <div class="log-optional-hdr-left">
+            <div class="log-optional-hdr-ico">🔵</div>
+            <div>
+              <div class="log-optional-hdr-txt">Gas & Cylinder</div>
+              <div class="log-optional-hdr-sub">Pressures, SAC rate</div>
+            </div>
+          </div>
+          <div class="log-optional-chev">›</div>
+        </div>
+        <div class="log-optional-body">
+          <div class="log-optional-inner">
+            <div class="log-f-row">
+              <div class="log-f-lbl">Cylinder</div>
+              <select class="log-f-sel" id="lf-cyl" onchange="updateLogCalc()">
+                <option value="10"${cylSize==10?' selected':''}>10 L</option>
+                <option value="12"${cylSize==12?' selected':''}>12 L</option>
+                <option value="15"${cylSize==15?' selected':''}>15 L</option>
+              </select>
+            </div>
+            <div class="log-f-row">
+              <div class="log-f-lbl">Start Pressure</div>
+              <input class="log-f-inp" type="number" id="lf-airin" placeholder="—" value="${log.airIn||''}" min="0" max="300" step="1" oninput="updateLogCalc()">
+              <span class="log-f-unit">bar</span>
+            </div>
+            <div class="log-f-row">
+              <div class="log-f-lbl">End Pressure</div>
+              <input class="log-f-inp" type="number" id="lf-airout" placeholder="—" value="${log.airOut||''}" min="0" max="300" step="1" oninput="updateLogCalc()">
+              <span class="log-f-unit">bar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      ${sacHtml ? `<div id="sacDisplayWrap">${sacHtml}</div>` : `<div id="sacDisplayWrap"></div>`}
+
+      <!-- OPTIONAL: Skills -->
+      <div class="log-optional-sec" id="optSkills">
+        <div class="log-optional-hdr" onclick="toggleOptSec('optSkills')">
+          <div class="log-optional-hdr-left">
+            <div class="log-optional-hdr-ico">💪</div>
+            <div>
+              <div class="log-optional-hdr-txt">Skills & Confidence</div>
+              <div class="log-optional-hdr-sub">Feeds into your long-term trends</div>
+            </div>
+          </div>
+          <div class="log-optional-chev">›</div>
+        </div>
+        <div class="log-optional-body">
+          <div class="log-optional-inner">
+            <div class="log-f-row" style="flex-direction:column;align-items:stretch;gap:10px;padding-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div class="log-f-lbl">Confidence</div>
+                <div class="log-skill-label" id="lfConfLabel">${skillLabels[confVal]}</div>
+              </div>
+              <div class="log-slider-wrap">
+                <input class="log-slider" type="range" id="lf-conf" min="1" max="5" step="1" value="${confVal}" oninput="updateSkillLabels()">
+                <div class="log-slider-labels"><span class="log-slider-lbl">Nervous</span><span class="log-slider-lbl">Excellent</span></div>
+              </div>
+            </div>
+            <div class="log-f-row" style="flex-direction:column;align-items:stretch;gap:10px;padding-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div class="log-f-lbl">Buoyancy</div>
+                <div class="log-skill-label" id="lfBuoyLabel">${buoyLabels[buoyVal]}</div>
+              </div>
+              <div class="log-slider-wrap">
+                <input class="log-slider" type="range" id="lf-buoy" min="1" max="5" step="1" value="${buoyVal}" oninput="updateSkillLabels()">
+                <div class="log-slider-labels"><span class="log-slider-lbl">Struggling</span><span class="log-slider-lbl">Perfect</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTIONAL: Reflection -->
+      <div class="log-optional-sec" id="optReflect">
+        <div class="log-optional-hdr" onclick="toggleOptSec('optReflect')">
+          <div class="log-optional-hdr-left">
+            <div class="log-optional-hdr-ico">💭</div>
+            <div>
+              <div class="log-optional-hdr-txt">Reflection</div>
+              <div class="log-optional-hdr-sub">What went well · What to improve</div>
+            </div>
+          </div>
+          <div class="log-optional-chev">›</div>
+        </div>
+        <div class="log-optional-body">
+          <div class="log-optional-inner">
+            <div class="log-f-row" style="flex-direction:column;align-items:stretch;gap:6px;padding-bottom:12px;">
+              <div class="log-f-lbl" style="color:var(--green);font-weight:600;">✓ What went well?</div>
+              <textarea class="log-f-ta" id="lf-wentwell" placeholder="e.g. buoyancy felt natural, stayed relaxed…" style="min-height:56px">${log.wentWell||''}</textarea>
+            </div>
+            <div class="log-f-row" style="flex-direction:column;align-items:stretch;gap:6px;padding-bottom:12px;border-top:0.5px solid var(--sep);">
+              <div class="log-f-lbl" style="color:var(--amber);font-weight:600;">↑ What to improve?</div>
+              <textarea class="log-f-ta" id="lf-improve" placeholder="e.g. air consumption, descent speed…" style="min-height:56px">${log.toImprove||''}</textarea>
+            </div>
+            <div class="log-f-row" style="flex-direction:column;align-items:stretch;gap:6px;padding-bottom:12px;border-top:0.5px solid var(--sep);">
+              <div class="log-f-lbl" style="font-weight:600;">🐟 Marine Life Spotted</div>
+              <textarea class="log-f-ta" id="lf-marine" placeholder="e.g. cuttlefish, conger eel, spider crabs…" style="min-height:44px">${log.marineLife||''}</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTIONAL: Notes -->
+      <div class="log-optional-sec" id="optNotes">
+        <div class="log-optional-hdr" onclick="toggleOptSec('optNotes')">
+          <div class="log-optional-hdr-left">
+            <div class="log-optional-hdr-ico">📝</div>
+            <div>
+              <div class="log-optional-hdr-txt">General Notes</div>
+              <div class="log-optional-hdr-sub">Anything else about the dive</div>
+            </div>
+          </div>
+          <div class="log-optional-chev">›</div>
+        </div>
+        <div class="log-optional-body">
+          <div class="log-optional-inner">
+            <div class="log-f-row" style="align-items:flex-start;padding-top:14px;">
+              <textarea class="log-f-ta" id="lf-notes" placeholder="Conditions, kit issues, memorable moments…">${log.notes||''}</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
 
     document.getElementById('logModal').classList.add('vis');
     document.getElementById('backdrop').classList.add('vis');
     document.getElementById('backdrop').onclick = closeLogModal;
+  }
+
+  function toggleOptSec(id) {
+    const sec = document.getElementById(id);
+    if (sec) sec.classList.toggle('open');
+  }
+
+  function setGasType(type) {
+    const log = S.logs.find(l => l.id === S.editingLogId);
+    if (log) log.gasType = type;
+    document.querySelectorAll('.log-gas-opt').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.log-gas-opt').forEach(el => {
+      if (el.textContent.toLowerCase() === type) el.classList.add('active');
+    });
+    const nitroxRow = document.getElementById('lfNitroxRow');
+    if (nitroxRow) nitroxRow.style.display = type === 'nitrox' ? 'flex' : 'none';
+  }
+
+  function updateVisLabel() {
+    const val = parseInt(document.getElementById('lf-vis')?.value) || 3;
+    const labels = ['','<1m — Poor','1–3m — Low','3–8m — Moderate','8–15m — Good','15m+ — Excellent'];
+    const el = document.getElementById('lfVisLabel');
+    if (el) el.textContent = labels[val] || '';
+  }
+
+  function updateSkillLabels() {
+    const confVal = parseInt(document.getElementById('lf-conf')?.value) || 3;
+    const buoyVal = parseInt(document.getElementById('lf-buoy')?.value) || 3;
+    const skillLabels = ['','⚡ Nervous','🙂 Developing','👍 Steady','💪 Confident','🌟 Excellent'];
+    const buoyLabels  = ['','⚓ Struggling','↕ Variable','👌 Okay','🐟 Good','✨ Perfect'];
+    const confEl = document.getElementById('lfConfLabel');
+    const buoyEl = document.getElementById('lfBuoyLabel');
+    if (confEl) confEl.textContent = skillLabels[confVal] || '';
+    if (buoyEl) buoyEl.textContent = buoyLabels[buoyVal] || '';
+  }
+
+  function calcSAC(airIn, airOut, cylLitres, maxDepth, diveTime) {
+    if (!airIn || !airOut || !cylLitres || !maxDepth || !diveTime) return null;
+    if (airIn <= airOut || diveTime <= 0) return null;
+    const consumed = (airIn - airOut) * cylLitres; // litres at surface
+    const avgDepth = maxDepth * 0.6;
+    const pressure = (avgDepth / 10) + 1;
+    const sac = consumed / pressure / diveTime;
+    return Math.round(sac * 10) / 10;
+  }
+
+  function getSACTrend(currentSAC, excludeId) {
+    const recent = S.logs
+      .filter(l => l.status === 'completed' && l.id !== excludeId && l.airIn && l.airOut && l.cylinderSize && l.maxDepth && l.bottomTime)
+      .slice(-10)
+      .map(l => calcSAC(l.airIn, l.airOut, l.cylinderSize, l.maxDepth, l.bottomTime))
+      .filter(v => v !== null);
+    if (!recent.length) return null;
+    const avg = recent.reduce((a,b) => a+b, 0) / recent.length;
+    const diff = currentSAC - avg;
+    const pct  = Math.abs(Math.round((diff / avg) * 100));
+    if (Math.abs(diff) < avg * 0.08) return { dir:'same', pct, avg };
+    return { dir: diff < 0 ? 'good' : 'warn', pct, avg };
+  }
+
+  function buildSACHtml(sacVal, trend) {
+    if (!sacVal) return '';
+    let trendHtml = '';
+    if (trend) {
+      const arrow = trend.dir === 'good' ? '↓' : trend.dir === 'warn' ? '↑' : '→';
+      const cls   = trend.dir;
+      const txt   = trend.dir === 'good' ? `${trend.pct}% below avg` : trend.dir === 'warn' ? `${trend.pct}% above avg` : 'On your average';
+      trendHtml = `<div class="log-sac-trend"><div class="log-sac-trend-arrow ${cls}">${arrow}</div><div class="log-sac-trend-txt">${txt}<br>avg ${trend.avg.toFixed(1)} L/min</div></div>`;
+    }
+    return `<div class="log-sac-display">
+      <div class="log-sac-left">
+        <div class="log-sac-label">SAC Rate</div>
+        <div class="log-sac-value">${sacVal}</div>
+        <div class="log-sac-unit">litres / min</div>
+      </div>
+      ${trendHtml}
+    </div>`;
   }
 
   function closeLogModal() {
@@ -3611,19 +3873,24 @@ renderSites();       // pre-render sites in background
   }
 
   function updateLogCalc() {
-    const airIn  = parseFloat(document.getElementById('lf-airin')?.value) || null;
-    const airOut = parseFloat(document.getElementById('lf-airout')?.value) || null;
-    const depth  = parseFloat(document.getElementById('lf-depth')?.value) || null;
-    const panel  = document.getElementById('logCalcPanel');
-    if (!panel) return;
-    let html = '';
-    if (airIn && airOut && airIn > airOut) {
-      html += `<div class="log-calc-row"><div class="log-calc-ico">⚡</div><div class="log-calc-txt">Air consumed</div><div class="log-calc-val">${(airIn-airOut)} bar</div></div>`;
+    const airIn   = parseFloat(document.getElementById('lf-airin')?.value)  || null;
+    const airOut  = parseFloat(document.getElementById('lf-airout')?.value) || null;
+    const depth   = parseFloat(document.getElementById('lf-depth')?.value)  || null;
+    const bt      = parseFloat(document.getElementById('lf-bt')?.value)     || null;
+    const cyl     = parseFloat(document.getElementById('lf-cyl')?.value)    || 12;
+
+    const sacVal  = calcSAC(airIn, airOut, cyl, depth, bt);
+    const sacTrend = sacVal ? getSACTrend(sacVal, S.editingLogId) : null;
+    const wrap    = document.getElementById('sacDisplayWrap');
+    if (wrap) wrap.innerHTML = sacVal ? buildSACHtml(sacVal, sacTrend) : '';
+
+    // Safety stop
+    const calcPanel = document.getElementById('logCalcPanel');
+    if (calcPanel) {
+      calcPanel.innerHTML = depth && depth > 10
+        ? `<div class="log-calc-row"><div class="log-calc-ico">⚠️</div><div class="log-calc-txt">Safety stop: 5m for 3 min</div></div>`
+        : '';
     }
-    if (depth && depth > 10) {
-      html += `<div class="log-calc-row"><div class="log-calc-ico">⚠️</div><div class="log-calc-txt">Safety stop: 5m for 3 min</div></div>`;
-    }
-    panel.innerHTML = html;
   }
 
   function setLogRating(r) {
@@ -3637,16 +3904,24 @@ renderSites();       // pre-render sites in background
   function saveLogFields() {
     const log = S.logs.find(l => l.id === S.editingLogId);
     if (!log) return;
-    const v = (id) => document.getElementById(id)?.value;
-    log.maxDepth   = parseFloat(v('lf-depth'))   || null;
-    log.bottomTime = parseFloat(v('lf-bt'))       || null;
-    log.airIn      = parseFloat(v('lf-airin'))    || null;
-    log.airOut     = parseFloat(v('lf-airout'))   || null;
-    log.temp       = parseFloat(v('lf-temp'))     || null;
-    log.weights    = parseFloat(v('lf-weights'))  || null;
-    log.vis        = v('lf-vis')   || null;
-    log.suit       = v('lf-suit')  || null;
-    log.notes      = v('lf-notes') || '';
+    const v  = id => document.getElementById(id)?.value;
+    const vn = id => parseFloat(document.getElementById(id)?.value) || null;
+    log.maxDepth      = vn('lf-depth');
+    log.bottomTime    = vn('lf-bt');
+    log.temp          = vn('lf-temp');
+    log.airIn         = vn('lf-airin');
+    log.airOut        = vn('lf-airout');
+    log.cylinderSize  = vn('lf-cyl') || 12;
+    log.nitroxPct     = vn('lf-nitrox');
+    log.vis           = parseInt(v('lf-vis')) || null;
+    log.confidence    = parseInt(v('lf-conf')) || null;
+    log.buoyancy      = parseInt(v('lf-buoy')) || null;
+    log.notes         = v('lf-notes') || '';
+    log.wentWell      = v('lf-wentwell') || '';
+    log.toImprove     = v('lf-improve') || '';
+    log.marineLife    = v('lf-marine') || '';
+    // SAC auto-calc
+    log.sac = calcSAC(log.airIn, log.airOut, log.cylinderSize, log.maxDepth, log.bottomTime);
   }
 
   function completeLogEntry() {

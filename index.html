@@ -3807,27 +3807,42 @@ function toast(msg) { showToast(msg); }
 // SWIPE GESTURES (calendar area)
 // ─────────────────────────────────────────────────
 
-let _tx=0, _ty=0;
+let _tx = 0, _ty = 0, _tScrolled = false;
 const calWrap = document.getElementById('calWrap');
 
-calWrap.addEventListener('touchstart', e=>{
+calWrap.addEventListener('touchstart', e => {
   _tx = e.touches[0].clientX;
   _ty = e.touches[0].clientY;
-}, {passive:true});
+  _tScrolled = false;
+}, { passive: true });
 
-calWrap.addEventListener('touchend', e=>{
+// Track whether this touch gesture is primarily a vertical scroll.
+// Any vertical movement over 8px that dominates horizontal = scroll intent.
+calWrap.addEventListener('touchmove', e => {
+  const dx = Math.abs(e.touches[0].clientX - _tx);
+  const dy = Math.abs(e.touches[0].clientY - _ty);
+  if (dy > 8 && dy > dx) _tScrolled = true;
+}, { passive: true });
+
+calWrap.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - _tx;
   const dy = e.changedTouches[0].clientY - _ty;
   const ax = Math.abs(dx), ay = Math.abs(dy);
-  if (ax<10 && ay<10) return;
+  if (ax < 10 && ay < 10) return; // pure tap — let the click event fire normally
   if (ay > ax && ay > 44) {
-    if (dy < 0 && S.view==='month')  { S.view='week';  renderCal(); renderList(); }
-    if (dy > 0 && S.view==='week')   { S.view='month'; S.calDate=new Date(S.selected); renderCal(); renderList(); }
-    if (dy < 0 && S.view==='agenda') { /* don't intercept scroll in agenda */ }
+    if (_tScrolled) return; // vertical scroll — do not change view
+    if (dy < 0 && S.view === 'month') { S.view = 'week';  renderCal(); renderList(); }
+    if (dy > 0 && S.view === 'week')  { S.view = 'month'; S.calDate = new Date(S.selected); renderCal(); renderList(); }
   } else if (ax > ay && ax > 44) {
-    navigate(dx < 0 ? 1 : -1);
+    navigate(dx < 0 ? 1 : -1); // horizontal swipe — navigate month
   }
-}, {passive:true});
+}, { passive: true });
+
+// Capture-phase click interceptor: if the last touch was a scroll,
+// stop the synthetic click before it reaches any day-cell onclick handler.
+calWrap.addEventListener('click', e => {
+  if (_tScrolled) e.stopPropagation();
+}, true);
 
 // ─────────────────────────────────────────────────
 // INIT

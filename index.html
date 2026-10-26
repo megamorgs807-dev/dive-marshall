@@ -110,12 +110,6 @@
     min-height:600px; padding-bottom:var(--sp-4);
   }
   .h-right-logo{ width:50%; max-width:230px; height:auto; filter:drop-shadow(0 6px 16px rgba(0,0,0,0.45)); }
-  .h-right-wave{ width:80%; max-width:340px; height:40px; margin-bottom:var(--sp-2); }
-  .pin-label{ font-family:'Space Mono',monospace; font-size:10.5px; fill:var(--ink); font-weight:700; }
-  .pin-label.dim{ fill:var(--ink); font-weight:400; opacity:0.75; }
-  .depth-label{ font-family:'Space Mono',monospace; font-size:9.5px; fill:var(--foam-dim); }
-  @media (prefers-reduced-motion: no-preference){ .surf-line{ animation:drift 26s linear infinite; } }
-  @keyframes drift{ from{ transform:translateX(0); } to{ transform:translateX(-140px); } }
 
   /* ── Trust strip ── */
   .trust{ background:var(--slate); border-top:1px solid var(--sep-soft); border-bottom:1px solid var(--sep-soft); }
@@ -298,9 +292,6 @@
       </div>
     </div>
     <div class="h-right">
-      <svg class="h-right-wave" viewBox="0 0 1160 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="surf-line" d="M-120 30 C 40 5, 200 55, 360 28 S 700 5, 860 30 S 1180 55, 1340 28" stroke="#eef6f1" stroke-width="2" fill="none" opacity="0.45"/>
-      </svg>
       <img src="assets/logo.svg" alt="Bude Divers — Bude, Cornwall" class="h-right-logo">
     </div>
   </section>

@@ -1377,7 +1377,7 @@
 
   <!-- ── Header ── -->
   <div class="header">
-    <span class="header-title" id="headerTitle">Portsmouth BSAC</span>
+    <span class="header-title" id="headerTitle">Bude Dive Club</span>
     <div class="header-avatar">MO</div>
   </div>
 
@@ -1443,26 +1443,18 @@
         <div class="profile-avatar">MO</div>
         <div class="profile-name">Morgan O</div>
         <div class="profile-qual">Dive Leader</div>
-        <div class="profile-club">Portsmouth BSAC</div>
+        <div class="profile-club">Bude Dive Club</div>
       </div>
 
-      <div class="profile-section-lbl">My Clubs</div>
+      <div class="profile-section-lbl">My Club</div>
       <div class="profile-rows">
         <div class="profile-row">
           <div class="profile-row-icon">🤿</div>
           <div class="profile-row-body">
-            <div class="profile-row-title">Portsmouth BSAC</div>
+            <div class="profile-row-title">Bude Dive Club</div>
             <div class="profile-row-sub">Member since 2019</div>
           </div>
           <span class="profile-row-badge">Admin</span>
-        </div>
-        <div class="profile-row">
-          <div class="profile-row-icon">🤿</div>
-          <div class="profile-row-body">
-            <div class="profile-row-title">Solent Divers</div>
-            <div class="profile-row-sub">Member since 2021</div>
-          </div>
-          <span class="profile-row-right">›</span>
         </div>
       </div>
 
@@ -1621,18 +1613,18 @@ const TYPE_COLOR = { boat:'#007aff', shore:'#00c7be', training:'#6366f1', event:
 const TYPE_LABEL = { boat:'Boat dive', shore:'Shore dive', training:'Training', event:'Club Event', social:'Social Event', meeting:'Meeting', trip:'Club Trip', other:'Other' };
 
 const RAW_ITEMS = [
-  { id:'d1', itemType:'dive',     date:'2026-02-14', time:'10:00', site:'Stokes Bay',        type:'shore',    depth:12, max:15,   createdBy:'Dave H',   notes:'Entry via slipway. Good viz last week. Bring a torch for the gullies.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F'] },
-  { id:'d2', itemType:'dive',     date:'2026-02-14', time:'14:00', site:'Spitbank Fort',     type:'boat',     depth:18, max:8,    createdBy:'Dave H',   notes:'RIB from Gunwharf pontoon. Arrive 15 mins early.', att:['Dave H','Paul T','Janet R','Mike C'] },
-  { id:'d3', itemType:'dive',     date:'2026-02-21', time:'09:30', site:'Lee-on-Solent',     type:'shore',    depth:10, max:null, createdBy:'Sarah M',  notes:'Shingle beach entry. Parking on seafront.', att:['Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K','Tom W'] },
-  { id:'d4', itemType:'dive',     date:'2026-02-28', time:'10:00', site:'Bracklesham Bay',   type:'shore',    depth:8,  max:12,   createdBy:'Dave H',   notes:'Sandy beach dive. Good for all grades. Meet at main car park by 09:45.', att:['Dave H','Sarah M','Paul T'] },
-  { id:'d5', itemType:'dive',     date:'2026-03-01', time:'09:00', site:'Nab Tower',         type:'boat',     depth:24, max:10,   createdBy:'Morgan O', notes:'Offshore dive — Sports Diver min. Check tides. RIB from Eastney Beach.', att:['Dave H','Paul T','Mike C','Liz F','Chris B'] },
-  { id:'d6', itemType:'dive',     date:'2026-03-01', time:'13:00', site:'Eastoke Point',     type:'shore',    depth:6,  max:null, createdBy:'Morgan O', notes:'Afternoon shore dive. All grades welcome.', att:['Sarah M','Anna K'] },
-  { id:'d7', itemType:'training', date:'2026-03-07', time:'09:00', site:'Horsea Island',     type:'training', depth:null, max:16, createdBy:'Sarah M',  notes:'Pool training session. All grades. Bring full training kit and slate.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K','Tom W','Rob E','Fiona M','Steve L'] },
-  { id:'d8', itemType:'dive',     date:'2026-03-08', time:'09:30', site:'Bembridge Ledge',   type:'boat',     depth:14, max:10,   createdBy:'Dave H',   notes:'Classic IOW site. RIB from Eastney. Great visibility in spring.', att:['Dave H','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K'] },
-  { id:'t1', itemType:'training', date:'2026-03-14', time:'10:00', site:'Horsea Island Pool',type:'training', depth:null, max:12, createdBy:'Morgan O', notes:'Confined water skills session. Compass work and emergency ascents. All grades. Bring full kit and slate.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F'] },
+  { id:'d1', itemType:'dive',     date:'2026-02-14', time:'10:00', site:'Northcott Mouth',        type:'shore',    depth:12, max:15,   createdBy:'Dave H',   notes:'Entry via slipway. Good viz last week. Bring a torch for the gullies.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F'] },
+  { id:'d2', itemType:'dive',     date:'2026-02-14', time:'14:00', site:'Dizzard Point Wreck',     type:'boat',     depth:18, max:8,    createdBy:'Dave H',   notes:'RIB from Gunwharf pontoon. Arrive 15 mins early.', att:['Dave H','Paul T','Janet R','Mike C'] },
+  { id:'d3', itemType:'dive',     date:'2026-02-21', time:'09:30', site:'Sandymouth',     type:'shore',    depth:10, max:null, createdBy:'Sarah M',  notes:'Shingle beach entry. Parking on seafront.', att:['Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K','Tom W'] },
+  { id:'d4', itemType:'dive',     date:'2026-02-28', time:'10:00', site:'Widemouth Bay',   type:'shore',    depth:8,  max:12,   createdBy:'Dave H',   notes:'Sandy beach dive. Good for all grades. Meet at main car park by 09:45.', att:['Dave H','Sarah M','Paul T'] },
+  { id:'d5', itemType:'dive',     date:'2026-03-01', time:'09:00', site:'Cambeak Reef',         type:'boat',     depth:24, max:10,   createdBy:'Morgan O', notes:'Offshore dive — Sports Diver min. Check tides. RIB from Eastney Beach.', att:['Dave H','Paul T','Mike C','Liz F','Chris B'] },
+  { id:'d6', itemType:'dive',     date:'2026-03-01', time:'13:00', site:'Crooklets Beach',     type:'shore',    depth:6,  max:null, createdBy:'Morgan O', notes:'Afternoon shore dive. All grades welcome.', att:['Sarah M','Anna K'] },
+  { id:'d7', itemType:'training', date:'2026-03-07', time:'09:00', site:'Holsworthy Pool',     type:'training', depth:null, max:16, createdBy:'Sarah M',  notes:'Pool training session. All grades. Bring full training kit and slate.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K','Tom W','Rob E','Fiona M','Steve L'] },
+  { id:'d8', itemType:'dive',     date:'2026-03-08', time:'09:30', site:'Sharpnose Ledges',   type:'boat',     depth:14, max:10,   createdBy:'Dave H',   notes:'Classic IOW site. RIB from Eastney. Great visibility in spring.', att:['Dave H','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K'] },
+  { id:'t1', itemType:'training', date:'2026-03-14', time:'10:00', site:'Holsworthy Pool',type:'training', depth:null, max:12, createdBy:'Morgan O', notes:'Confined water skills session. Compass work and emergency ascents. All grades. Bring full kit and slate.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F'] },
   { id:'ev1',itemType:'event',    date:'2026-03-15', time:'19:30', site:'The Dive Bar',      type:'social',   depth:null, max:null,createdBy:'Dave H',   notes:'Post-training social at The Dive Bar. Partners welcome! First round on the committee.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K','Tom W'] },
   { id:'ev2',itemType:'event',    date:'2026-03-22', time:'14:00', site:'Club HQ',           type:'meeting',  depth:null, max:null,createdBy:'Sarah M',  notes:'Quarterly committee meeting. Season planning, trip proposals and kit audit. All welcome.', att:['Dave H','Sarah M','Paul T','Liz F'] },
-  { id:'ev3',itemType:'event',    date:'2026-04-11', time:'08:00', site:'Lyme Bay Charter',  type:'trip',     depth:null, max:20,  createdBy:'Morgan O', notes:'Two-day wreck diving charter out of Weymouth. Various wrecks including the Countess of Erne. Contact Morgan to book. Kit storage onboard.', att:['Dave H','Paul T','Janet R','Mike C'] },
+  { id:'ev3',itemType:'event',    date:'2026-04-11', time:'08:00', site:'Hartland Point Charter',  type:'trip',     depth:null, max:20,  createdBy:'Morgan O', notes:'Two-day wreck diving charter out of Ilfracombe. Various wrecks around Lundy Island. Contact Morgan to book. Kit storage onboard.', att:['Dave H','Paul T','Janet R','Mike C'] },
 
   // ── Monthly club meetings — 1st Tuesday of each month, 19:30 ──
   { id:'m1', itemType:'event', date:'2026-02-03', time:'19:30', site:'Club HQ', type:'meeting', depth:null, max:null, createdBy:'Sarah M', notes:'Monthly club meeting. Dive reports, upcoming trips, kit updates and AOB. All members welcome.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B','Tom W'] },
@@ -1642,37 +1634,37 @@ const RAW_ITEMS = [
 
   // ── Additional items: richer multi-week, multi-type demo data ──
   // Feb 14 — 3rd item (3-way stack demo)
-  { id:'x1', itemType:'training', date:'2026-02-14', time:'11:30', site:'Horsea Island Pool', type:'training', depth:null, max:12,  createdBy:'Sarah M',  notes:'Pre-season buoyancy refresher. Foundation Diver+. Bring full kit and slate.', att:['Dave H','Sarah M','Paul T','Janet R','Liz F','Chris B'] },
+  { id:'x1', itemType:'training', date:'2026-02-14', time:'11:30', site:'Holsworthy Pool', type:'training', depth:null, max:12,  createdBy:'Sarah M',  notes:'Pre-season buoyancy refresher. Foundation Diver+. Bring full kit and slate.', att:['Dave H','Sarah M','Paul T','Janet R','Liz F','Chris B'] },
   // Feb 28 — 2nd item (2-way stack)
-  { id:'x2', itemType:'dive',     date:'2026-02-28', time:'14:00', site:'Spitbank Fort',      type:'boat',     depth:18,   max:8,   createdBy:'Dave H',   notes:'Afternoon RIB dive. Depart Gunwharf Pontoon 13:45. Sports Diver min.', att:['Dave H','Paul T','Chris B','Anna K'] },
+  { id:'x2', itemType:'dive',     date:'2026-02-28', time:'14:00', site:'Dizzard Point Wreck',      type:'boat',     depth:18,   max:8,   createdBy:'Dave H',   notes:'Afternoon RIB dive. Depart Gunwharf Pontoon 13:45. Sports Diver min.', att:['Dave H','Paul T','Chris B','Anna K'] },
   // Mar 7 — dive alongside training (2-way stack)
-  { id:'x3', itemType:'dive',     date:'2026-03-07', time:'13:30', site:'Eastoke Point',      type:'shore',    depth:6,    max:null,createdBy:'Sarah M',  notes:'Post-training afternoon shore dive. Great for Foundation/Ocean Diver grades.', att:['Sarah M','Janet R','Anna K','Tom W'] },
+  { id:'x3', itemType:'dive',     date:'2026-03-07', time:'13:30', site:'Crooklets Beach',      type:'shore',    depth:6,    max:null,createdBy:'Sarah M',  notes:'Post-training afternoon shore dive. Great for Foundation/Ocean Diver grades.', att:['Sarah M','Janet R','Anna K','Tom W'] },
   // Mar 8 — event + existing boat dive (2-way stack)
-  { id:'x4', itemType:'event',    date:'2026-03-08', time:'17:00', site:'Club HQ',            type:'social',   depth:null, max:null,createdBy:'Dave H',   notes:'Post-dive debrief and underwater photos from the Bembridge dive. Cameras welcome!', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B'] },
+  { id:'x4', itemType:'event',    date:'2026-03-08', time:'17:00', site:'Club HQ',            type:'social',   depth:null, max:null,createdBy:'Dave H',   notes:'Post-dive debrief and underwater photos from the Sharpnose dive. Cameras welcome!', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B'] },
   // Mar 15 — boat dive + existing social (2-way stack)
-  { id:'x5', itemType:'dive',     date:'2026-03-15', time:'09:30', site:'Bembridge Ledge',    type:'boat',     depth:14,   max:10,  createdBy:'Paul T',   notes:'Second IOW boat dive of the season. Great visibility forecast. Depart Eastney 09:00.', att:['Paul T','Mike C','Chris B','Rob E'] },
+  { id:'x5', itemType:'dive',     date:'2026-03-15', time:'09:30', site:'Sharpnose Ledges',    type:'boat',     depth:14,   max:10,  createdBy:'Paul T',   notes:'Second IOW boat dive of the season. Great visibility forecast. Depart Eastney 09:00.', att:['Paul T','Mike C','Chris B','Rob E'] },
   // Mar 21 — brand new week: boat dive + training (2-way stack)
-  { id:'x6', itemType:'dive',     date:'2026-03-21', time:'09:30', site:'Solent Banks',       type:'boat',     depth:20,   max:8,   createdBy:'Dave H',   notes:'Deeper boat dive on the Solent Banks. Sports Diver min. Spring tides — gin-clear expected.', att:['Dave H','Paul T','Mike C','Chris B'] },
-  { id:'x7', itemType:'training', date:'2026-03-21', time:'14:00', site:'Horsea Island Pool', type:'training', depth:null, max:16,  createdBy:'Sarah M',  notes:'Rescue skills afternoon — simulated emergency scenarios. Ocean Diver+ required.', att:['Sarah M','Janet R','Anna K','Tom W','Liz F','Rob E','Fiona M'] },
+  { id:'x6', itemType:'dive',     date:'2026-03-21', time:'09:30', site:'Crackington Reef',       type:'boat',     depth:20,   max:8,   createdBy:'Dave H',   notes:'Deeper boat dive on the Crackington Reef. Sports Diver min. Spring tides — gin-clear expected.', att:['Dave H','Paul T','Mike C','Chris B'] },
+  { id:'x7', itemType:'training', date:'2026-03-21', time:'14:00', site:'Holsworthy Pool', type:'training', depth:null, max:16,  createdBy:'Sarah M',  notes:'Rescue skills afternoon — simulated emergency scenarios. Ocean Diver+ required.', att:['Sarah M','Janet R','Anna K','Tom W','Liz F','Rob E','Fiona M'] },
   // Mar 28 — spring tide shore dive (rough wx: good contrast with nice-weather dates)
-  { id:'x8', itemType:'dive',     date:'2026-03-28', time:'10:00', site:'Stokes Bay',         type:'shore',    depth:12,   max:null,createdBy:'Morgan O', notes:'Spring tide shore dive — strong currents expected. Experienced divers. Plan entry at slack water.', att:['Dave H','Paul T'] },
+  { id:'x8', itemType:'dive',     date:'2026-03-28', time:'10:00', site:'Northcott Mouth',         type:'shore',    depth:12,   max:null,createdBy:'Morgan O', notes:'Spring tide shore dive — strong currents expected. Experienced divers. Plan entry at slack water.', att:['Dave H','Paul T'] },
   // Apr 4 — training week
-  { id:'x9', itemType:'training', date:'2026-04-04', time:'09:00', site:'Horsea Island Pool', type:'training', depth:null, max:12,  createdBy:'Sarah M',  notes:'Navigation and DSMB deployment skills. All grades. Bring compass and DSMB if you have one.', att:['Dave H','Sarah M','Paul T','Janet R','Anna K','Tom W'] },
+  { id:'x9', itemType:'training', date:'2026-04-04', time:'09:00', site:'Holsworthy Pool', type:'training', depth:null, max:12,  createdBy:'Sarah M',  notes:'Navigation and DSMB deployment skills. All grades. Bring compass and DSMB if you have one.', att:['Dave H','Sarah M','Paul T','Janet R','Anna K','Tom W'] },
   // Apr 5 — Easter Sunday shore dive
-  { id:'x10',itemType:'dive',     date:'2026-04-05', time:'11:00', site:'Eastoke Point',      type:'shore',    depth:6,    max:null,createdBy:'Dave H',   notes:'Easter Sunday shore dive. All grades welcome — good entry-level site in calm spring conditions.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K'] },
-  // Apr 12 — Nab Tower offshore (alongside Lyme Bay trip week)
-  { id:'x11',itemType:'dive',     date:'2026-04-12', time:'09:30', site:'Nab Tower',          type:'boat',     depth:24,   max:10,  createdBy:'Morgan O', notes:'Nab Tower offshore. Sports Diver min. Neap tides, excellent conditions expected. RIB from Eastney Beach.', att:['Dave H','Paul T','Mike C','Chris B'] },
+  { id:'x10',itemType:'dive',     date:'2026-04-05', time:'11:00', site:'Crooklets Beach',      type:'shore',    depth:6,    max:null,createdBy:'Dave H',   notes:'Easter Sunday shore dive. All grades welcome — good entry-level site in calm spring conditions.', att:['Dave H','Sarah M','Paul T','Janet R','Mike C','Liz F','Chris B','Anna K'] },
+  // Apr 12 — Cambeak Reef offshore (alongside Lyme Bay trip week)
+  { id:'x11',itemType:'dive',     date:'2026-04-12', time:'09:30', site:'Cambeak Reef',          type:'boat',     depth:24,   max:10,  createdBy:'Morgan O', notes:'Cambeak Reef offshore. Sports Diver min. Neap tides, excellent conditions expected. RIB from Eastney Beach.', att:['Dave H','Paul T','Mike C','Chris B'] },
 ];
 
 const RAW_LOGS = [
-  { id:'lg1', calItemId:null, num:38, date:'2025-11-08', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:14.2, bottomTime:42, airIn:200, airOut:80,  temp:12, vis:3, suit:'7mm Wetsuit', weights:8,  notes:'Great viz today — saw a cuttlefish sheltering near the rocks. Slight current on the return.',      rating:4, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
-  { id:'lg2', calItemId:null, num:39, date:'2025-11-22', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:18.6, bottomTime:38, airIn:210, airOut:90,  temp:11, vis:2, suit:'7mm Wetsuit', weights:8,  notes:'Visibility down to 4m but loads of wrasse. Good dive despite the conditions.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
-  { id:'lg3', calItemId:null, num:40, date:'2025-12-06', site:'Bembridge Ledges',buddy:'Mike C',   maxDepth:12.4, bottomTime:35, airIn:200, airOut:95,  temp:10, vis:2, suit:'7mm Wetsuit', weights:9,  notes:'Cold but worth it. Found an old anchor chain near the ledge.',                                      rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:4, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
-  { id:'lg4', calItemId:null, num:41, date:'2026-01-10', site:'Stokes Bay',      buddy:'Paul T',   maxDepth:16.8, bottomTime:45, airIn:210, airOut:70,  temp:9,  vis:3, suit:'Drysuit',     weights:12, notes:'First drysuit dive of the year. Jellyfish everywhere! Excellent visibility — easily 8m+.',           rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:4, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
-  { id:'lg5', calItemId:null, num:42, date:'2026-01-24', site:'Forts Wreck',     buddy:'Liz F',    maxDepth:22.1, bottomTime:32, airIn:210, airOut:100, temp:8,  vis:5, suit:'Drysuit',     weights:12, notes:'Deep one today. The wreck is stunning at 22m. Massive conger eel under the hull.',                 rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:5, buoyancy:5, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
-  { id:'lg6', calItemId:null, num:43, date:'2026-02-07', site:'Bembridge Ledges',buddy:'Chris B',  maxDepth:11.8, bottomTime:48, airIn:200, airOut:85,  temp:8,  vis:1, suit:'Drysuit',     weights:12, notes:'Viz only 2m but a lovely swim-through at the main ledge. Lots of spider crabs.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
-  { id:'lg7', calItemId:'d1', num:44, date:'2026-02-14', site:'Stokes Bay',      buddy:'Dave H',   maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
-  { id:'lg8', calItemId:'d2', num:45, date:'2026-02-21', site:'Spitbank Fort',   buddy:'Sarah M',  maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
+  { id:'lg1', calItemId:null, num:38, date:'2025-11-08', site:'Northcott Mouth',      buddy:'Dave H',   maxDepth:14.2, bottomTime:42, airIn:200, airOut:80,  temp:12, vis:3, suit:'7mm Wetsuit', weights:8,  notes:'Great viz today — saw a cuttlefish sheltering near the rocks. Slight current on the return.',      rating:4, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
+  { id:'lg2', calItemId:null, num:39, date:'2025-11-22', site:'Dizzard Point Wreck',   buddy:'Sarah M',  maxDepth:18.6, bottomTime:38, airIn:210, airOut:90,  temp:11, vis:2, suit:'7mm Wetsuit', weights:8,  notes:'Visibility down to 4m but loads of wrasse. Good dive despite the conditions.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
+  { id:'lg3', calItemId:null, num:40, date:'2025-12-06', site:'Sharpnose Ledges',buddy:'Mike C',   maxDepth:12.4, bottomTime:35, airIn:200, airOut:95,  temp:10, vis:2, suit:'7mm Wetsuit', weights:9,  notes:'Cold but worth it. Found an old anchor chain near the ledge.',                                      rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:3, buoyancy:4, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
+  { id:'lg4', calItemId:null, num:41, date:'2026-01-10', site:'Northcott Mouth',      buddy:'Paul T',   maxDepth:16.8, bottomTime:45, airIn:210, airOut:70,  temp:9,  vis:3, suit:'Drysuit',     weights:12, notes:'First drysuit dive of the year. Jellyfish everywhere! Excellent visibility — easily 8m+.',           rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:4, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
+  { id:'lg5', calItemId:null, num:42, date:'2026-01-24', site:'Henna Cliff Wreck',     buddy:'Liz F',    maxDepth:22.1, bottomTime:32, airIn:210, airOut:100, temp:8,  vis:5, suit:'Drysuit',     weights:12, notes:'Deep one today. The wreck is stunning at 22m. Massive conger eel under the hull.',                 rating:5, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:5, buoyancy:5, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
+  { id:'lg6', calItemId:null, num:43, date:'2026-02-07', site:'Sharpnose Ledges',buddy:'Chris B',  maxDepth:11.8, bottomTime:48, airIn:200, airOut:85,  temp:8,  vis:1, suit:'Drysuit',     weights:12, notes:'Viz only 2m but a lovely swim-through at the main ledge. Lots of spider crabs.',                    rating:3, status:'completed', gasType:'air', nitroxPct:null, cylinderSize:12, confidence:4, buoyancy:3, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
+  { id:'lg7', calItemId:'d1', num:44, date:'2026-02-14', site:'Northcott Mouth',      buddy:'Dave H',   maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
+  { id:'lg8', calItemId:'d2', num:45, date:'2026-02-21', site:'Dizzard Point Wreck',   buddy:'Sarah M',  maxDepth:null, bottomTime:null, airIn:null, airOut:null, temp:null, vis:null, suit:null, weights:null, notes:'', rating:null, status:'pending', gasType:null, nitroxPct:null, cylinderSize:null, confidence:null, buoyancy:null, wentWell:'', toImprove:'', marineLife:'', gearCheck:'All good', envTideH:null, envTideLow:null, envTideSp:null, envTideAmp:null, envWindDir:null, envWindSpd:null, envWindCls:null, envSwellDir:null, envSwellHgt:null, envSwellCls:null, envWxIcon:null, envWxSummary:null, envWxTemp:null, envNotes:'', envSnapshotTaken:false },
 ];
 
 const NOTICE_COLORS = {
@@ -1736,7 +1728,7 @@ const RAW_MARSHALS = {
   '2026-08-31': { status:'open',      name:null },
 };
 
-// Static Portsmouth tide data — hw/lw are first HW/LW; hw2/lw2 are second (≈+12h25m)
+// Static Bude tide data — hw/lw are first HW/LW; hw2/lw2 are second (≈+12h25m)
 // divingTides() picks the daytime-relevant pair for display. Real API replaces this later.
 const RAW_TIDES = {
   '2026-02-09': { sp:true,  hw:'04:52', lw:'11:12', hw2:'17:17', lw2:'23:37' },
@@ -1825,14 +1817,14 @@ const RAW_WEATHER = {
 };
 
 const SITES_DATA = [
-  { name:'Stokes Bay',      type:'shore',    depth:12, region:'Lee-on-Solent',   lastDived:'14 Feb 2026' },
-  { name:'Spitbank Fort',   type:'boat',     depth:18, region:'Portsmouth Hbr',  lastDived:'14 Feb 2026' },
-  { name:'Lee-on-Solent',   type:'shore',    depth:10, region:'Lee-on-Solent',   lastDived:'21 Feb 2026' },
-  { name:'Bracklesham Bay', type:'shore',    depth:8,  region:'Selsey',          lastDived:'28 Feb 2026' },
-  { name:'Nab Tower',       type:'boat',     depth:24, region:'Offshore',        lastDived:'1 Mar 2026'  },
-  { name:'Eastoke Point',   type:'shore',    depth:6,  region:'Hayling Island',  lastDived:'1 Mar 2026'  },
-  { name:'Horsea Island',   type:'training', depth:8,  region:'Portsmouth',      lastDived:'7 Mar 2026'  },
-  { name:'Bembridge Ledge', type:'boat',     depth:14, region:'Isle of Wight',   lastDived:'8 Mar 2026'  },
+  { name:'Northcott Mouth',      type:'shore',    depth:12, region:'Sandymouth',   lastDived:'14 Feb 2026' },
+  { name:'Dizzard Point Wreck',   type:'boat',     depth:18, region:'Dizzard Point',  lastDived:'14 Feb 2026' },
+  { name:'Sandymouth',   type:'shore',    depth:10, region:'Sandymouth',   lastDived:'21 Feb 2026' },
+  { name:'Widemouth Bay', type:'shore',    depth:8,  region:'Widemouth Bay',          lastDived:'28 Feb 2026' },
+  { name:'Cambeak Reef',       type:'boat',     depth:24, region:'Offshore',        lastDived:'1 Mar 2026'  },
+  { name:'Crooklets Beach',   type:'shore',    depth:6,  region:'Bude',  lastDived:'1 Mar 2026'  },
+  { name:'Holsworthy Pool',   type:'training', depth:8,  region:'Holsworthy',      lastDived:'7 Mar 2026'  },
+  { name:'Sharpnose Ledges', type:'boat',     depth:14, region:'Hartland',   lastDived:'8 Mar 2026'  },
 ];
 
 // ─────────────────────────────────────────────────
@@ -1971,8 +1963,8 @@ function isUrgentWeek(wk) {
 // ─────────────────────────────────────────────────
 
 const TAB_TITLES = {
-  dashboard: 'Portsmouth BSAC',
-  calendar:  'Portsmouth BSAC',
+  dashboard: 'Bude Dive Club',
+  calendar:  'Bude Dive Club',
   logbook:   'Dive Logbook',
   sites:     'Dive Sites',
   profile:   'Morgan O',
@@ -2751,7 +2743,7 @@ function hourlyWeatherFor(dateStr, wd) {
   let h = 0;
   for (let i = 0; i < dateStr.length; i++) h = (h * 31 + dateStr.charCodeAt(i)) >>> 0;
   const baseIdx      = dirs.indexOf(baseDir) >= 0 ? dirs.indexOf(baseDir) : (h % 8);
-  // Swell: stable direction per day, small hourly height variation (realistic for UK/Solent)
+  // Swell: stable direction per day, small hourly height variation (realistic for UK/Cornwall)
   const swellBaseIdx = (h >> 10) % 8;
   const swellBaseHgt = 0.3 + ((h >> 5) % 13) * 0.1;  // 0.3–1.5m
   return Array.from({ length: 16 }, (_, idx) => {
@@ -3576,7 +3568,7 @@ function renderAddStep2() {
 
   // ── DIVE BRANCH — enhanced planner ──
   if (isDive) {
-    const sites = ['Stokes Bay','Spitbank Fort','Bembridge Ledges','Forts Wreck','Nab Tower','Bracklesham Bay','Eastoke Point','The Mixon','Portsdown Quarry'];
+    const sites = ['Northcott Mouth','Dizzard Point Wreck','Sharpnose Ledges','Henna Cliff Wreck','Cambeak Reef','Widemouth Bay','Crooklets Beach','Chapel Rock','Compass Point'];
     const siteOpts = sites.map(s => `<option value="${s}"${f.site===s?' selected':''}>${s}</option>`).join('');
     const todayStr = isoDate(TODAY);
 
@@ -3599,7 +3591,7 @@ function renderAddStep2() {
       <div class="adp-opt-inner">
         <div class="f-row">
           <div class="f-lbl">Boat Name</div>
-          <input class="f-inp" type="text" id="af-boat" placeholder="e.g. Solent Star" value="${f.boatName||''}">
+          <input class="f-inp" type="text" id="af-boat" placeholder="e.g. Atlantic Diver" value="${f.boatName||''}">
         </div>
         <div class="f-row">
           <div class="f-lbl">Skipper</div>
@@ -3733,7 +3725,7 @@ function renderAddStep2() {
 
   // ── NON-DIVE BRANCHES (training / event) — original layout ──
   const siteLbl = isTraining ? 'Venue' : 'Name';
-  const sitePh  = isTraining ? 'e.g. Horsea Island Pool' : 'e.g. End of Season Social';
+  const sitePh  = isTraining ? 'e.g. Holsworthy Pool' : 'e.g. End of Season Social';
 
   // T&W panel for the current date (Quick = collapsed strip, Full = expanded panel)
   const twPanelHtml = buildTWPanelForAdd(f.date, f.mode);

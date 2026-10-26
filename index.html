@@ -1369,11 +1369,55 @@
     .adp-slider-top { display: flex; justify-content: space-between; align-items: center; }
     .adp-slider-val { font-size: 16px; font-weight: 800; color: var(--navy); letter-spacing: -0.4px; }
     .adp-slider-unit { font-size: 12px; color: var(--txt3); margin-left: 2px; }
+
+    /* ── Auth / login screen ── */
+    .auth-wrap { position: fixed; inset: 0; background: var(--bg); z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
+    .auth-logo { font-size: 40px; margin-bottom: 6px; }
+    .auth-club { font-size: 20px; font-weight: 800; color: var(--txt1); letter-spacing: -0.3px; margin-bottom: 28px; }
+    .auth-card { width: 100%; max-width: 360px; background: var(--card); border-radius: var(--r); box-shadow: 0 2px 10px rgba(0,30,60,0.08); overflow: hidden; }
+    .auth-tabs { display: flex; border-bottom: 0.5px solid var(--sep); }
+    .auth-tab { flex: 1; text-align: center; padding: 14px 0; font-size: 14px; font-weight: 700; color: var(--txt3); cursor: pointer; }
+    .auth-tab.active { color: var(--navy); box-shadow: inset 0 -2px 0 var(--navy); }
+    .auth-body { padding: 18px 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+    .auth-field-lbl { font-size: 12px; font-weight: 700; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 5px; }
+    .auth-input { width: 100%; padding: 11px 12px; font-size: 15px; border: 1px solid var(--grey4); border-radius: 10px; background: var(--bg); color: var(--txt1); outline: none; }
+    .auth-input:focus { border-color: var(--navy); }
+    .auth-btn { width: 100%; padding: 13px 0; margin-top: 4px; border: none; border-radius: 10px; background: var(--navy); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
+    .auth-btn:active { opacity: 0.88; }
+    .auth-btn:disabled { opacity: 0.5; cursor: default; }
+    .auth-error { font-size: 13px; color: var(--red); min-height: 16px; }
+    .auth-hint { font-size: 12px; color: var(--txt3); text-align: center; margin-top: 2px; }
+    .auth-switch { color: var(--navy); font-weight: 700; cursor: pointer; }
   </style>
 </head>
 <body>
 
-<div id="app" class="app">
+<!-- ── Auth screen (shown until signed in) ── -->
+<div class="auth-wrap" id="authWrap">
+  <div class="auth-logo">🤿</div>
+  <div class="auth-club">Bude Dive Club</div>
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="authTabSignin" onclick="setAuthMode('signin')">Sign In</div>
+      <div class="auth-tab" id="authTabSignup" onclick="setAuthMode('signup')">Create Account</div>
+    </div>
+    <div class="auth-body">
+      <div>
+        <div class="auth-field-lbl">Email</div>
+        <input class="auth-input" id="authEmail" type="email" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <div>
+        <div class="auth-field-lbl">Password</div>
+        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <div class="auth-error" id="authError"></div>
+      <button class="auth-btn" id="authSubmitBtn" onclick="submitAuth()">Sign In</button>
+      <div class="auth-hint" id="authHint">New here? <span class="auth-switch" onclick="setAuthMode('signup')">Create an account</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="app" style="display:none;">
 
   <!-- ── Header ── -->
   <div class="header">
@@ -1507,6 +1551,15 @@
         </div>
       </div>
 
+      <div class="profile-rows">
+        <div class="profile-row" onclick="signOut()" style="cursor:pointer;">
+          <div class="profile-row-icon">🚪</div>
+          <div class="profile-row-body">
+            <div class="profile-row-title" style="color:var(--red);">Sign Out</div>
+          </div>
+        </div>
+      </div>
+
       <div class="profile-version">Dive Marshall · Version 0.1 · Prototype</div>
     </div>
   </div>
@@ -1596,7 +1649,78 @@
 <!-- Tide tooltip (floating dark pill, shown on month grid hover/tap) -->
 <div class="tide-pop" id="tidePop"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
+// ─────────────────────────────────────────────────
+// AUTH — Supabase project for Bude Dive Club
+// ─────────────────────────────────────────────────
+const SUPABASE_URL = 'https://lhflwdwgcqqwayktzdsv.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_-WYxxFhxmbOwt6LZJ5_VHw_0wStrciz';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let authMode = 'signin';
+
+function setAuthMode(mode) {
+  authMode = mode;
+  document.getElementById('authTabSignin').classList.toggle('active', mode === 'signin');
+  document.getElementById('authTabSignup').classList.toggle('active', mode === 'signup');
+  document.getElementById('authSubmitBtn').textContent = mode === 'signin' ? 'Sign In' : 'Create Account';
+  document.getElementById('authHint').innerHTML = mode === 'signin'
+    ? 'New here? <span class="auth-switch" onclick="setAuthMode(\'signup\')">Create an account</span>'
+    : 'Already a member? <span class="auth-switch" onclick="setAuthMode(\'signin\')">Sign in</span>';
+  const errEl = document.getElementById('authError');
+  errEl.textContent = '';
+  errEl.style.color = 'var(--red)';
+}
+
+async function submitAuth() {
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const errEl = document.getElementById('authError');
+  errEl.style.color = 'var(--red)';
+  errEl.textContent = '';
+  if (!email || !password) { errEl.textContent = 'Enter your email and password.'; return; }
+  const btn = document.getElementById('authSubmitBtn');
+  btn.disabled = true;
+  try {
+    const { error } = authMode === 'signin'
+      ? await sb.auth.signInWithPassword({ email, password })
+      : await sb.auth.signUp({ email, password });
+    if (error) { errEl.textContent = error.message; btn.disabled = false; return; }
+    if (authMode === 'signup') {
+      errEl.style.color = 'var(--green)';
+      errEl.textContent = 'Account created — check your email to confirm, then sign in.';
+      btn.disabled = false;
+      return;
+    }
+  } catch (e) {
+    errEl.textContent = 'Something went wrong. Try again.';
+    btn.disabled = false;
+  }
+}
+
+function showApp() {
+  document.getElementById('authWrap').style.display = 'none';
+  document.getElementById('app').style.display = '';
+  renderDashboard();
+  renderAll();         // pre-render calendar in background
+  renderSites();       // pre-render sites in background
+}
+
+function showAuth() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('authWrap').style.display = 'flex';
+  document.getElementById('authSubmitBtn').disabled = false;
+}
+
+async function signOut() {
+  await sb.auth.signOut();
+}
+
+sb.auth.onAuthStateChange((event, session) => {
+  if (session) showApp(); else showAuth();
+});
+
 // ─────────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────────
@@ -3989,12 +4113,8 @@ calWrap.addEventListener('click', e => {
 }, true);
 
 // ─────────────────────────────────────────────────
-// INIT
+// INIT — rendering now kicked off from showApp() after sign-in
 // ─────────────────────────────────────────────────
-
-renderDashboard();
-renderAll();         // pre-render calendar in background
-renderSites();       // pre-render sites in background
 
   /* ══════════════════════════════════════
      LOGBOOK

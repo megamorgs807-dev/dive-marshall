@@ -172,6 +172,19 @@
   .about-copy p{ color:var(--foam-dim); font-size:16px; line-height:1.75; margin-bottom:var(--sp-3); max-width:66ch; }
   .about-copy h3{ font-family:'Fraunces',serif; font-size:21px; color:var(--foam); margin:var(--sp-4) 0 var(--sp-2); font-weight:600; }
 
+  .callout{
+    max-width:var(--maxw); margin:0 auto var(--sp-6); background:var(--deep);
+    border-left:3px solid var(--brass); border-radius:0 4px 4px 0;
+    padding:var(--sp-4) var(--sp-6);
+    display:grid; grid-template-columns:auto 1fr; gap:var(--sp-3); align-items:start;
+  }
+  .callout .tag{
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--brass); white-space:nowrap; padding-top:3px;
+  }
+  .callout p{ font-size:16px; line-height:1.65; color:var(--foam); max-width:64ch; }
+  .callout p b{ color:var(--brass); font-weight:700; }
+
   /* Events: timeline */
   .timeline{ max-width:var(--maxw); margin:0 auto; display:flex; flex-direction:column; }
   .tl-item{
@@ -281,11 +294,11 @@
     <div class="h-left">
       <div class="eyebrow">BSAC Branch 715 &middot; Bude, North Cornwall</div>
       <h1 class="h-headline">Granite ledges. Kelp forests. An Atlantic that <em>means it.</em></h1>
-      <p class="h-body"><span class="life">Crayfish</span> tucked under every ledge, grey <span class="life">seals</span> working the swell line, and wrecks scattered off Dizzard Point and out toward Lundy. Read the tide, trust the chart, and go anyway.</p>
+      <p class="h-body"><span class="life">Seals</span> working the swell line, lobster and crab tucked into every crevice, the odd dogfish out of the gloom &mdash; all within reach of the shore we grew up diving. Read the tide, trust the chart, and go anyway.</p>
       <div class="h-stats">
         <div class="h-stat"><span class="v">4&ndash;12m</span><span class="l">Visibility</span></div>
         <div class="h-stat"><span class="v">8&ndash;16&deg;C</span><span class="l">Water temp</span></div>
-        <div class="h-stat"><span class="v">24m</span><span class="l">Max local depth</span></div>
+        <div class="h-stat"><span class="v">25m</span><span class="l">Max local depth</span></div>
         <div class="h-stat"><span class="v">1975</span><span class="l">Diving since</span></div>
       </div>
       <div class="h-ctas">
@@ -306,18 +319,18 @@
         <path class="surf-line" d="M-120 520 C 40 495, 200 545, 360 518 S 700 495, 860 520 S 1180 545, 1340 518" stroke="#eef6f1" stroke-width="2" fill="none" opacity="0.65"/>
         <g>
           <circle cx="246" cy="258" r="4.5" fill="#c9914f" stroke="#0e2430" stroke-width="1"/>
-          <text x="256" y="254" class="pin-label">Northcott Mouth</text>
-          <text x="256" y="268" class="pin-label dim">shore &middot; 12m</text>
+          <text x="256" y="254" class="pin-label">Boscastle</text>
+          <text x="256" y="268" class="pin-label dim">shore entry</text>
         </g>
         <g>
           <circle cx="150" cy="360" r="4.5" fill="#c9914f" stroke="#0e2430" stroke-width="1"/>
           <text x="160" y="356" class="pin-label">Dizzard Point</text>
-          <text x="160" y="370" class="pin-label dim">boat wreck &middot; 18m</text>
+          <text x="160" y="370" class="pin-label dim">boat &middot; to 25m</text>
         </g>
         <g>
           <circle cx="330" cy="440" r="4.5" fill="#c9914f" stroke="#0e2430" stroke-width="1"/>
-          <text x="340" y="436" class="pin-label">Sharpnose Ledges</text>
-          <text x="340" y="450" class="pin-label dim">boat &middot; 14m</text>
+          <text x="340" y="436" class="pin-label">Millook</text>
+          <text x="340" y="450" class="pin-label dim">shore &middot; shallow</text>
         </g>
         <g transform="translate(400,560)" stroke="#0e2430" stroke-width="1" fill="none" opacity="0.55">
           <circle r="24"/><line x1="0" y1="-24" x2="0" y2="24"/><line x1="-24" y1="0" x2="24" y2="0"/>
@@ -355,7 +368,7 @@
     <div class="offer-side">
       <div class="offer-small">
         <h3>Club dives &amp; trips</h3>
-        <p>Regular reef and wreck dives around Devon, Dorset and Cornwall, plus longer weekend and overseas trips — planned around what the membership wants to dive.</p>
+        <p>Mostly our own north Cornwall coast, plus wreck trips to Plymouth when the swell's against us and the occasional weekend further afield — planned around what the membership fancies.</p>
       </div>
       <div class="offer-small">
         <h3>Try before you join</h3>
@@ -374,6 +387,10 @@
     <div class="eyebrow">About us</div>
     <h2>Formed in 1975, still diving the same wild coast</h2>
   </div>
+  <div class="callout">
+    <span class="tag">Know before you go</span>
+    <p>Every site on this coast plays by its own rules &mdash; some only work on a rising tide, some need it falling, and get the window wrong and you're fighting a current instead of diving a reef. <b>That's not something a guidebook can tell you.</b> It's exactly what joining the local club gives you: people who already know which site works today.</p>
+  </div>
   <div class="about-grid">
     <div class="about-rail">
       <div class="rail-stat"><div class="v">715th</div><div class="l">BSAC branch nationally</div></div>
@@ -382,8 +399,8 @@
       <div class="rail-stat"><div class="v">&pound;5m</div><div class="l">Liability cover included</div></div>
     </div>
     <div class="about-copy">
-      <p>This stretch of coast doesn't get dived by accident &mdash; you need people who know the tide tables, the entry points, and which ledge the crayfish are hiding under this month. That's what the club gives you: <span class="life">access</span>, not just training.</p>
-      <p>Bude Dive Club is the 715th branch of the British Sub-Aqua Club &mdash; the UK's governing body for recreational scuba diving, not a commercial school. We run a full diving calendar across Cornwall and Devon, alongside BSAC-certified instructor training, for members aged 14 to 75.</p>
+      <p>This coast is why most of us got into diving in the first place &mdash; wild Atlantic reefs on the doorstep, seals and lobster a short swim from shore, and wrecks going back to the 1800s. Given the choice, we're always back here the moment conditions allow.</p>
+      <p>Bude Dive Club is the 715th branch of the British Sub-Aqua Club &mdash; the UK's governing body for recreational scuba diving, not a commercial school. We mainly dive our own north Cornwall coast; when the Atlantic swell turns rough, the club boat heads round to Plymouth for a change of scenery and its famous wrecks, until our own coast settles again.</p>
       <p>Already qualified elsewhere? Your grade — BSAC or PADI — carries straight across, and if you haven't dived in years you'll simply join with a refresher session rather than starting over.</p>
       <h3>Membership requirements</h3>
       <p>The minimum age to start scuba training is 14, with a parent training alongside. Beyond that: swim two pool lengths freestyle and complete a self-certification medical declaration. That's the whole fitness bar to get started.</p>
@@ -401,33 +418,40 @@
   <div class="section-head">
     <div class="eyebrow">Events</div>
     <h2>How the season runs</h2>
-    <p>Bude Dive Club is an active supporter of community diving projects across the Southwest, and runs regional expeditions alongside national BSAC training events &mdash; on top of the regular seasonal calendar below.</p>
+    <p>It's a small club, but a busy one &mdash; how often we're in the water depends entirely on what the Atlantic's doing that week.</p>
   </div>
   <div class="timeline">
     <div class="tl-item">
-      <div class="tl-season">Winter</div>
+      <div class="tl-season">Spring</div>
       <div class="tl-body">
         <h3>Pool training at Holsworthy</h3>
-        <p>Sunday afternoons through the winter months, running into March and April &mdash; open to every grade, instructor-led throughout.</p>
+        <p>Running every other week, for new divers and anyone coming back to the sport to refresh a skill before the season opens up.</p>
       </div>
     </div>
     <div class="tl-item">
-      <div class="tl-season">Spring &ndash; Summer</div>
+      <div class="tl-season">Summer</div>
       <div class="tl-body">
-        <h3>Sea diving from Easter</h3>
-        <p>Once the season turns, training and club dives move to the sea around Devon &amp; Cornwall &mdash; weather and tide windows permitting.</p>
+        <h3>Diving our own coast, often</h3>
+        <p>When the weather's kind, club dives on home turf can happen several times a week &mdash; conditions and the tide window allowing.</p>
       </div>
     </div>
     <div class="tl-item">
-      <div class="tl-season">Year-round</div>
+      <div class="tl-season">Winter</div>
       <div class="tl-body">
-        <h3>Try dives &amp; try snorkelling</h3>
-        <p>Thinking about joining? Come to a taster session first &mdash; get in touch and we'll find you a date that fits the calendar above.</p>
+        <h3>Drysuits, year-round</h3>
+        <p>Things slow down, but plenty of members keep diving straight through winter whenever conditions allow &mdash; this isn't a fair-weather club.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-season">Any time it's rough</div>
+      <div class="tl-body">
+        <h3>South to Plymouth</h3>
+        <p>When the north coast swell is too much, the club boat heads south to dive Plymouth's wrecks instead &mdash; then it's straight back here once conditions settle.</p>
       </div>
     </div>
   </div>
   <div class="inline-cta">
-    <p><b>Pool sessions run right through winter.</b> First-timers always welcome — just let us know you're coming.</p>
+    <p><b>New or coming back to diving?</b> Pool sessions run every other week through spring — just let us know you're coming.</p>
     <a href="#contact">Book a taster &rarr;</a>
   </div>
 </section>
@@ -473,7 +497,7 @@
     </div>
     <div class="faq-item">
       <button class="faq-q">Where do you train and dive?<span class="chev">+</span></button>
-      <div class="faq-a"><div class="faq-a-inner">Pool training is at Holsworthy Swimming Pool over winter, moving to the sea around Devon &amp; Cornwall from Easter. Day trips tend to cover the South Devon and Dorset coastline; longer weekend trips range further to Cornwall and South/South West Wales, depending on what members want to dive.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Pool training is at Holsworthy Swimming Pool, running every other week through spring for new divers and anyone refreshing a skill. Sea diving is mainly our own north Cornwall coast &mdash; sites like Millook, Dizzard Point and Boscastle &mdash; with the club boat heading round to Plymouth when the swell turns against us.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-q">Can I be a member of more than one branch?<span class="chev">+</span></button>

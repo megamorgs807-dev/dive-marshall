@@ -55,10 +55,7 @@
     max-width:var(--maxw); margin:0 auto; padding:14px var(--sp-4);
   }
   .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
-  .brand svg{ width:36px; height:36px; flex-shrink:0; }
-  .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
-  .brand-name{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; color:var(--foam); }
-  .brand-sub{ font-size:10.5px; color:var(--foam-dim); letter-spacing:1.5px; text-transform:uppercase; }
+  .brand-logo{ height:46px; width:auto; display:block; }
   nav{ display:flex; align-items:center; gap:4px; }
   nav a.navlink{
     color:var(--foam-dim); text-decoration:none; font-size:14.5px; font-weight:500;
@@ -228,8 +225,8 @@
     max-width:var(--maxw); margin:0 auto; display:flex; justify-content:space-between;
     align-items:center; flex-wrap:wrap; gap:16px; padding-bottom:20px;
   }
-  .footer-brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; color:var(--foam); }
-  .footer-brand svg{ width:22px; height:22px; }
+  .footer-brand{ display:flex; align-items:center; }
+  .footer-logo{ height:30px; width:auto; display:block; }
   .footer-links{ display:flex; gap:20px; flex-wrap:wrap; font-size:14px; }
   .footer-links a{ text-decoration:none; color:var(--foam-dim); }
   .footer-links a:hover{ color:var(--foam); }
@@ -254,7 +251,7 @@
     nav a.navlink{ padding:12px 10px; }
     .btn-login{ margin-left:0; margin-top:8px; text-align:center; }
     .nav-toggle{ display:block; }
-    .brand-sub{ display:none; }
+    .brand-logo{ height:36px; }
     .trust-row{ grid-template-columns:1fr; }
   }
 </style>
@@ -264,16 +261,7 @@
 <header>
   <div class="nav-row">
     <a class="brand" href="#home">
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22 36 C14 34 6 38 4 48 C3 54 5 60 10 64 C14 58 18 50 23 42 C25 39 24 37 22 36 Z" fill="#4ea1d3" opacity="0.9"/>
-        <path d="M32 38 C24 38 16 44 14 54 C13 59 15 63 19 64 C24 58 29 50 34 43 C36 40 35 38 32 38 Z" stroke="#eef6f1" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M32 8 C42 8 48 16 47 26 C46 34 40 38 32 38 C24 38 18 34 17 26 C16 16 22 8 32 8 Z" stroke="#eef6f1" stroke-width="2.2" stroke-linejoin="round"/>
-        <circle cx="32" cy="22" r="8" stroke="#eef6f1" stroke-width="1.8"/>
-      </svg>
-      <span class="brand-text">
-        <span class="brand-name">Bude Dive Club</span>
-        <span class="brand-sub">BSAC 715 · Est. 1975</span>
-      </span>
+      <img src="assets/logo.svg" alt="Bude Divers — Bude, Cornwall" class="brand-logo">
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
     <nav id="mainNav">
@@ -533,13 +521,7 @@
 <footer>
   <div class="footer-row">
     <div class="footer-brand">
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22 36 C14 34 6 38 4 48 C3 54 5 60 10 64 C14 58 18 50 23 42 C25 39 24 37 22 36 Z" fill="#4ea1d3" opacity="0.9"/>
-        <path d="M32 38 C24 38 16 44 14 54 C13 59 15 63 19 64 C24 58 29 50 34 43 C36 40 35 38 32 38 Z" stroke="#eef6f1" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M32 8 C42 8 48 16 47 26 C46 34 40 38 32 38 C24 38 18 34 17 26 C16 16 22 8 32 8 Z" stroke="#eef6f1" stroke-width="2.2" stroke-linejoin="round"/>
-        <circle cx="32" cy="22" r="8" stroke="#eef6f1" stroke-width="1.8"/>
-      </svg>
-      Bude Dive Club
+      <img src="assets/logo.svg" alt="Bude Divers" class="footer-logo">
     </div>
     <div class="footer-links">
       <a href="#home">Home</a>

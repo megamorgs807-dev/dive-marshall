@@ -4247,6 +4247,9 @@ calWrap.addEventListener('click', e => {
 
     const completed = S.logs.filter(l => l.status === 'completed').sort((a,b) => b.date.localeCompare(a.date));
     const pending   = S.logs.filter(l => l.status === 'pending').sort((a,b) => b.date.localeCompare(a.date));
+    const todayStr  = isoDate(TODAY);
+    const upcoming  = S.items.filter(d => S.signedUp.has(d.id) && d.date >= todayStr)
+      .sort((a,b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
 
     // Stats
     const totalDives   = completed.length;
@@ -4307,6 +4310,14 @@ calWrap.addEventListener('click', e => {
         <div class="log-pending-alert-count">${pending.length}</div>
       </div>` : '';
 
+    const upcomingHtml = upcoming.length
+      ? upcoming.map(d => buildDashCard(d, true)).join('')
+      : `<div class="log-empty">
+          <div class="log-empty-ico">📅</div>
+          <div class="log-empty-txt">No upcoming dives booked</div>
+          <div class="log-empty-sub">Sign up on the Calendar tab to see them here.</div>
+        </div>`;
+
     wrap.innerHTML = `
       <div class="log-stats-banner">
         <div class="log-stat"><div class="log-stat-val">${totalDives}</div><div class="log-stat-lbl">Total Dives</div></div>
@@ -4314,6 +4325,8 @@ calWrap.addEventListener('click', e => {
         <div class="log-stat"><div class="log-stat-val">${deepest}m</div><div class="log-stat-lbl">Deepest</div></div>
         <div class="log-stat"><div class="log-stat-val">${avgTemp}°C</div><div class="log-stat-lbl">Avg Temp</div></div>
       </div>
+      <div class="log-section-lbl">📅 Upcoming</div>
+      ${upcomingHtml}
       ${pendingAlertHtml}
       ${pending.length ? `<div class="log-section-lbl">⏳ Needs Logging</div>${pendingHtml}` : ''}
       <div class="log-section-lbl">✓ Completed</div>

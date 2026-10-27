@@ -1497,9 +1497,9 @@
           <div class="profile-row-icon">🤿</div>
           <div class="profile-row-body">
             <div class="profile-row-title">Bude Dive Club</div>
-            <div class="profile-row-sub">Member since 2019</div>
+            <div class="profile-row-sub" id="profileMemberSince">Member since —</div>
           </div>
-          <span class="profile-row-badge">Admin</span>
+          <span class="profile-row-badge" id="profileAdminBadge" style="display:none">Admin</span>
         </div>
       </div>
 
@@ -1508,8 +1508,7 @@
         <div class="profile-row">
           <div class="profile-row-icon">🏅</div>
           <div class="profile-row-body">
-            <div class="profile-row-title">Dive Leader</div>
-            <div class="profile-row-sub">BSAC No. 123456</div>
+            <div class="profile-row-title" id="profileQualTitle">Not yet set</div>
           </div>
         </div>
       </div>
@@ -1522,7 +1521,7 @@
             <div class="profile-row-title">Willing to marshal</div>
             <div class="profile-row-sub">In the club marshal pool</div>
           </div>
-          <div class="tog on" id="profileMarshalTog" onclick="toggleProfileTog('profileMarshalTog')">
+          <div class="tog on" id="profileMarshalTog" onclick="toggleProfileTog('profileMarshalTog','eligible_for_duty')">
             <div class="tog-thumb"></div>
           </div>
         </div>
@@ -1536,7 +1535,7 @@
             <div class="profile-row-title">Email reminders</div>
             <div class="profile-row-sub">Dive day-before reminders</div>
           </div>
-          <div class="tog on" id="profileEmailTog" onclick="toggleProfileTog('profileEmailTog')">
+          <div class="tog on" id="profileEmailTog" onclick="toggleProfileTog('profileEmailTog','email_notifications_enabled')">
             <div class="tog-thumb"></div>
           </div>
         </div>
@@ -1546,7 +1545,7 @@
             <div class="profile-row-title">App notifications</div>
             <div class="profile-row-sub">Marshal requests, changes</div>
           </div>
-          <div class="tog on" id="profileNotifTog" onclick="toggleProfileTog('profileNotifTog')">
+          <div class="tog on" id="profileNotifTog" onclick="toggleProfileTog('profileNotifTog','alert_upcoming_duty')">
             <div class="tog-thumb"></div>
           </div>
         </div>
@@ -1800,6 +1799,26 @@ function applyMyProfileToUI() {
   if (profNameEl) profNameEl.textContent = S.me.full_name || '';
   const qualEl = document.querySelector('.profile-qual');
   if (qualEl) qualEl.textContent = S.me.qualification_level || 'Member';
+
+  const memberSinceEl = document.getElementById('profileMemberSince');
+  if (memberSinceEl) {
+    if (S.me.created_at) {
+      const joined = new Date(S.me.created_at);
+      memberSinceEl.textContent = `Member since ${MONTHS_SHORT[joined.getMonth()]} ${joined.getFullYear()}`;
+    } else {
+      memberSinceEl.textContent = 'Member';
+    }
+  }
+  const adminBadgeEl = document.getElementById('profileAdminBadge');
+  if (adminBadgeEl) adminBadgeEl.style.display = S.me.role === 'admin' ? '' : 'none';
+
+  const qualTitleEl = document.getElementById('profileQualTitle');
+  if (qualTitleEl) qualTitleEl.textContent = S.me.qualification_level || 'Not yet set';
+
+  const setTog = (id, val) => { const el = document.getElementById(id); if (el) el.classList.toggle('on', !!val); };
+  setTog('profileMarshalTog', S.me.eligible_for_duty);
+  setTog('profileEmailTog', S.me.email_notifications_enabled);
+  setTog('profileNotifTog', S.me.alert_upcoming_duty);
 }
 
 function showAuth() {
@@ -3308,9 +3327,19 @@ function toggleRem(id) {
   showToast(was ? 'Reminder off' : 'Reminder set for the day before');
 }
 
-function toggleProfileTog(id) {
+async function toggleProfileTog(id, field) {
   const el = document.getElementById(id);
-  if (el) el.classList.toggle('on');
+  if (!el) return;
+  const newVal = !el.classList.contains('on');
+  el.classList.toggle('on', newVal);
+  if (!field || !MY_USER_ID) return;
+  const { error } = await sb.from('users').update({ [field]: newVal }).eq('user_id', MY_USER_ID);
+  if (error) {
+    el.classList.toggle('on', !newVal);
+    console.error('Failed to save profile setting', field, error);
+  } else if (S.me) {
+    S.me[field] = newVal;
+  }
 }
 
 // ─────────────────────────────────────────────────

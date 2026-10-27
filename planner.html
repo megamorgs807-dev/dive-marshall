@@ -3847,8 +3847,7 @@ function renderAddStep2() {
 
   // ── DIVE BRANCH — enhanced planner ──
   if (isDive) {
-    const sites = ['Northcott Mouth','Dizzard Point Wreck','Sharpnose Ledges','Henna Cliff Wreck','Cambeak Reef','Widemouth Bay','Crooklets Beach','Chapel Rock','Compass Point'];
-    const siteOpts = sites.map(s => `<option value="${s}"${f.site===s?' selected':''}>${s}</option>`).join('');
+    const siteOpts = SITES_DATA.map(s => `<option value="${s.name}">`).join('');
     const todayStr = isoDate(TODAY);
 
     // Tide, weather & hourly env strip for selected date
@@ -3885,10 +3884,8 @@ function renderAddStep2() {
 
         <div class="f-row">
           <div class="f-lbl">Dive Site</div>
-          <select class="f-sel" id="af-site" onchange="saveAddFields()">
-            <option value="">Choose site…</option>
-            ${siteOpts}
-          </select>
+          <input class="f-inp" type="text" id="af-site" list="af-site-datalist" value="${f.site||''}" placeholder="Type or pick a site…" oninput="saveAddFields()">
+          <datalist id="af-site-datalist">${siteOpts}</datalist>
         </div>
 
         <div class="f-row">

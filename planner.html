@@ -3411,9 +3411,11 @@ function renderSheetContent() {
       }).join('');
 
     const mySection = myWeekRows ? `<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3);padding:8px 0 4px">My weeks</div>${myWeekRows}` : '';
-    const openSection = openRows
-      ? `<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3);padding:8px 0 4px">Open weeks</div>${openRows}`
-      : `<div class="rota-empty">All open weeks are covered — thanks! 🎉</div>`;
+    const openSection = allFuture.length === 0
+      ? `<div class="rota-empty">No weeks scheduled yet — check back soon.</div>`
+      : openRows
+        ? `<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3);padding:8px 0 4px">Open weeks</div>${openRows}`
+        : `<div class="rota-empty">All open weeks are covered — thanks! 🎉</div>`;
 
     el.innerHTML = `
       <div class="sh-title">Marshal Rota</div>

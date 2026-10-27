@@ -1820,7 +1820,8 @@ sb.auth.onAuthStateChange((event, session) => {
 // DATA
 // ─────────────────────────────────────────────────
 
-const TODAY   = new Date(2026, 1, 28);
+const _now = new Date();
+const TODAY = new Date(_now.getFullYear(), _now.getMonth(), _now.getDate());
 const MY_NAME = 'Morgan O';
 let MY_USER_ID = null;
 

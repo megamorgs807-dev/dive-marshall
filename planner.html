@@ -547,12 +547,13 @@
     .add-btn {
       display: flex; align-items: center; justify-content: center;
       gap: 8px; width: 100%; padding: 14px;
-      background: transparent; border: 1.5px dashed var(--grey4);
-      border-radius: var(--r); font-size: 15px; color: var(--txt3);
+      background: linear-gradient(180deg, var(--red) 0%, #991b1b 100%); border: none;
+      border-radius: var(--r); font-size: 15px; font-weight: 600; color: #fff;
       cursor: pointer; margin-top: 6px; font-family: inherit;
-      transition: border-color 0.15s, background 0.15s;
+      box-shadow: 0 2px 8px rgba(220,38,38,0.3);
+      transition: all 0.18s cubic-bezier(0.4,0,0.2,1);
     }
-    .add-btn:active { background: var(--grey5); border-color: #8e8e93; }
+    .add-btn:active { opacity: 0.88; transform: scale(0.985); }
 
     .no-dives { text-align: center; padding: 40px 24px; color: var(--txt3); }
     .no-dives-ico { font-size: 32px; margin-bottom: 8px; }

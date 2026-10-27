@@ -1476,7 +1476,7 @@
         <div class="sites-map-ph-txt">Dive Site Map</div>
         <div class="sites-map-ph-sub">Interactive map coming in full build</div>
       </div>
-      <div class="sites-list-lbl">Club Dive Sites (8)</div>
+      <div class="sites-list-lbl" id="sitesListLbl">Club Dive Sites</div>
       <div id="sitesList"></div>
     </div>
   </div>
@@ -2389,6 +2389,8 @@ const SITE_ICONS = { boat:'⛵', shore:'🏖️', training:'🏊', social:'🎉'
 const SITE_BG    = { boat:'#dbeafe', shore:'#cffafe', training:'#f3f4f6', social:'#dcfce7', other:'#f3f4f6' };
 
 function renderSites() {
+  const lblEl = document.getElementById('sitesListLbl');
+  if (lblEl) lblEl.textContent = `Club Dive Sites (${SITES_DATA.length})`;
   let html = '';
   SITES_DATA.forEach(site => {
     const col = TYPE_COLOR[site.type] || '#8e8e93';

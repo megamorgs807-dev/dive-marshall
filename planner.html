@@ -1741,11 +1741,21 @@ async function loadAppData() {
   const usersById = {};
   (usersRes.data || []).forEach(u => { usersById[u.user_id] = u.full_name; });
 
+  // Last dived per site — derived from real past calendar items (club-wide),
+  // not static text, so it stays accurate as the club actually dives.
+  const todayStr = isoDate(TODAY);
+  const lastDivedBySite = {};
+  (itemsRes.data || []).forEach(it => {
+    if (it.date > todayStr) return;
+    if (!lastDivedBySite[it.site] || it.date > lastDivedBySite[it.site]) lastDivedBySite[it.site] = it.date;
+  });
+  const fmtLastDived = ds => ds ? new Date(ds + 'T12:00:00').toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
+
   // SITES_DATA is const — mutate in place so existing references stay valid
   SITES_DATA.length = 0;
   (sitesRes.data || []).forEach(s => SITES_DATA.push({
     name: s.site_name, type: parseSiteType(s.notes), depth: s.typical_depth_max_m,
-    region: s.region, lastDived: (s.notes || '').match(/Last dived ([^.]+)\./)?.[1] || '',
+    region: s.region, lastDived: fmtLastDived(lastDivedBySite[s.site_name]),
   }));
 
   S.items = (itemsRes.data || []).map(it => ({
@@ -2386,7 +2396,7 @@ function renderSites() {
       <div class="site-icon" style="background:${SITE_BG[site.type]||'#f3f4f6'}">${SITE_ICONS[site.type]||'📍'}</div>
       <div class="site-info">
         <div class="site-name">${site.name}</div>
-        <div class="site-meta">${site.region} · ${site.depth}m typical · Last dived ${site.lastDived}</div>
+        <div class="site-meta">${site.region} · ${site.depth}m typical${site.lastDived ? ` · Last dived ${site.lastDived}` : ' · Not dived yet'}</div>
       </div>
       <span class="site-badge" style="background:${col}">${TYPE_LABEL[site.type]||site.type}</span>
     </div>`;

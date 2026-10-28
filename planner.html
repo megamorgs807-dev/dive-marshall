@@ -644,6 +644,20 @@
     .site-chev { color: var(--grey3); font-size: 16px; flex-shrink: 0; }
     .site-fav-star { font-size: 19px; flex-shrink: 0; cursor: pointer; line-height: 1; padding: 2px; }
     .site-modal-fav-btn { background: none; border: none; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1; }
+    .site-comment-row { padding: 11px 16px; border-bottom: 0.5px solid var(--sep); }
+    .site-comment-row:last-child { border-bottom: none; }
+    .site-comment-hdr { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+    .site-comment-name { font-size: 13px; font-weight: 600; color: var(--txt1); }
+    .site-comment-date { font-size: 11px; color: var(--txt3); }
+    .site-comment-body { font-size: 14px; color: var(--txt2); line-height: 1.5; white-space: pre-wrap; }
+    .site-comment-empty { padding: 16px; text-align: center; font-size: 13px; color: var(--txt3); }
+    .site-comment-form { display: flex; flex-direction: column; gap: 8px; padding: 12px 16px; border-top: 0.5px solid var(--sep); }
+    .site-comment-post-btn {
+      align-self: flex-end; background: var(--navy); color: #fff; border: none;
+      border-radius: 8px; padding: 8px 18px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+    }
+    .site-comment-post-btn:active { opacity: 0.85; }
     .site-photo-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; -webkit-overflow-scrolling: touch; }
     .site-photo-img { height: 160px; width: auto; flex-shrink: 0; border-radius: var(--r); object-fit: cover; box-shadow: 0 1px 4px rgba(0,30,60,0.12); }
     .site-add-photo-btn {
@@ -1754,7 +1768,7 @@ async function loadAppData() {
   MY_USER_ID = me ? me.user_id : null;
   S.favSiteIds = new Set((me && me.favourite_site_ids) || []);
 
-  const [sitesRes, itemsRes, signupsRes, weeksRes, usersRes, noticesRes, logsRes, photosRes] = await Promise.all([
+  const [sitesRes, itemsRes, signupsRes, weeksRes, usersRes, noticesRes, logsRes, photosRes, commentsRes] = await Promise.all([
     sb.from('dive_sites').select('*').eq('club_id', me.club_id),
     sb.from('calendar_items').select('*').eq('club_id', me.club_id),
     sb.from('calendar_item_signups').select('calendar_item_id').eq('user_id', MY_USER_ID),
@@ -1763,6 +1777,7 @@ async function loadAppData() {
     sb.from('notices').select('*').eq('club_id', me.club_id),
     sb.from('logbook_entries').select('*').eq('user_id', MY_USER_ID),
     sb.from('site_photos').select('*').order('created_at', { ascending: false }),
+    sb.from('site_comments').select('*').order('created_at', { ascending: false }),
   ]);
 
   const photosBySite = {};
@@ -1772,6 +1787,14 @@ async function loadAppData() {
 
   const usersById = {};
   (usersRes.data || []).forEach(u => { usersById[u.user_id] = u.full_name; });
+
+  const commentsBySite = {};
+  (commentsRes.data || []).forEach(c => {
+    (commentsBySite[c.site_id] ||= []).push({
+      id: c.comment_id, userName: usersById[c.user_id] || 'A member',
+      body: c.body, createdAt: c.created_at,
+    });
+  });
 
   // Last dived per site — derived from real past calendar items (club-wide),
   // not static text, so it stays accurate as the club actually dives.
@@ -1793,6 +1816,7 @@ async function loadAppData() {
     bestTide: s.best_tide || '', hazards: s.hazards || '', tips: s.tips || '',
     suitableFor: s.suitable_for || '', parkingAccess: s.parking_access || '',
     photos: photosBySite[s.site_id] || [],
+    comments: commentsBySite[s.site_id] || [],
   }));
 
   S.items = (itemsRes.data || []).map(it => ({
@@ -2513,6 +2537,21 @@ function openSiteDetail(id) {
       ${editRow('💡 Tips', 'site-tips', site.tips, 'e.g. Best entered 2hrs before HW, look for the gully on the left…', true)}
       ${editRow('🅿️ Parking & Access', 'site-parking', site.parkingAccess, 'e.g. Free car park off Crooklets Road, short walk down steps…', true)}
     </div>
+
+    <div class="adp-section">
+      <div class="adp-sec-lbl">💬 Trip Reports & Comments</div>
+      <div id="siteCommentsList">
+        ${site.comments && site.comments.length ? site.comments.map(c => `
+          <div class="site-comment-row">
+            <div class="site-comment-hdr"><span class="site-comment-name">${c.userName}</span><span class="site-comment-date">${fmtCommentDate(c.createdAt)}</span></div>
+            <div class="site-comment-body">${escapeHtml(c.body)}</div>
+          </div>`).join('') : '<div class="site-comment-empty">No reports yet — be the first to share how it dived.</div>'}
+      </div>
+      <div class="site-comment-form">
+        <textarea class="log-f-ta" id="siteCommentInput" placeholder="e.g. Dived here Tuesday, viz was 6m+, lovely conditions on the ebb…" style="min-height:52px"></textarea>
+        <button class="site-comment-post-btn" onclick="postSiteComment()">Post</button>
+      </div>
+    </div>
   `;
 
   document.getElementById('siteModal').classList.add('vis');
@@ -2592,6 +2631,42 @@ async function uploadSitePhoto(event) {
   showToast('✓ Photo added');
   openSiteDetail(siteId);
   renderSites();
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function fmtCommentDate(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+
+async function postSiteComment() {
+  const siteId = S.editingSiteId;
+  const site = SITES_DATA.find(s => s.id === siteId);
+  const input = document.getElementById('siteCommentInput');
+  const body = input ? input.value.trim() : '';
+  if (!site || !body) return;
+
+  const { data, error } = await sb.from('site_comments').insert({
+    site_id: siteId, user_id: MY_USER_ID, body,
+  }).select('created_at').single();
+
+  if (error) {
+    console.error('Failed to post comment', error);
+    showToast('Could not post — try again');
+    return;
+  }
+
+  site.comments.unshift({
+    id: null, userName: (S.me && S.me.full_name) || 'You',
+    body, createdAt: data ? data.created_at : new Date().toISOString(),
+  });
+  openSiteDetail(siteId);
+  showToast('✓ Posted');
 }
 
 // ─────────────────────────────────────────────────
@@ -4390,7 +4465,7 @@ function confirmAdd() {
       const newSite = {
         id: null, name: siteName, type: 'shore', depth: null, depthMin: null,
         visibility: null, tempMin: null, tempMax: null, region: '', lastDived: '',
-        bestTide: '', hazards: '', tips: '', suitableFor: '', parkingAccess: '', photos: [],
+        bestTide: '', hazards: '', tips: '', suitableFor: '', parkingAccess: '', photos: [], comments: [],
       };
       SITES_DATA.push(newSite);
       sb.from('dive_sites').insert({ club_id: S.me.club_id, site_name: siteName })

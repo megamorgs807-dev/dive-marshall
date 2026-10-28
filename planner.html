@@ -793,7 +793,7 @@
       background: rgba(10,15,25,0.88); color: #fff;
       padding: 10px 22px; border-radius: 22px;
       font-size: 14px; font-weight: 500;
-      z-index: 500; pointer-events: none;
+      z-index: 1100; pointer-events: none;
       white-space: nowrap; opacity: 0;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -1081,9 +1081,12 @@
     .log-badge-lbl { font-size: 9px; font-weight: 700; color: var(--txt2); text-align: center; letter-spacing: 0.1px; line-height: 1.3; }
     .log-badge-sub { font-size: 8px; color: var(--txt3); text-align: center; }
 
-    /* ── Log Edit Modal ── */
+    /* ── Log Edit Modal ──
+       z-index 1000: Leaflet's own panes/controls (used by the Dive Sites
+       map) go up to ~800, so this must clear that or the map's zoom
+       buttons and popups poke through on top of the modal when it opens. */
     .log-modal {
-      position: fixed; inset: 0; background: var(--bg); z-index: 300;
+      position: fixed; inset: 0; background: var(--bg); z-index: 1000;
       overflow-y: auto; transform: translateY(100%);
       transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
       max-width: 430px; left: 50%; margin-left: -215px;

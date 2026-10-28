@@ -644,6 +644,14 @@
     .site-chev { color: var(--grey3); font-size: 16px; flex-shrink: 0; }
     .site-photo-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; -webkit-overflow-scrolling: touch; }
     .site-photo-img { height: 160px; width: auto; flex-shrink: 0; border-radius: var(--r); object-fit: cover; box-shadow: 0 1px 4px rgba(0,30,60,0.12); }
+    .site-add-photo-btn {
+      display: block; width: 100%; padding: 12px; margin-bottom: 14px;
+      background: transparent; border: 1.5px dashed var(--grey4);
+      border-radius: var(--r); font-size: 14px; color: var(--txt3);
+      cursor: pointer; font-family: inherit; transition: border-color 0.15s, background 0.15s;
+    }
+    .site-add-photo-btn:active { background: var(--grey5); border-color: #8e8e93; }
+    .site-add-photo-btn:disabled { opacity: 0.5; cursor: default; }
 
     /* ── Profile ── */
     .profile-wrap { padding: 0 0 90px; }
@@ -2453,6 +2461,10 @@ function openSiteDetail(id) {
 
   document.getElementById('siteModalBody').innerHTML = `
     ${photosHtml}
+    <button class="site-add-photo-btn" onclick="document.getElementById('sitePhotoInput').click()">📷 Add Photo</button>
+    <input type="file" accept="image/*" id="sitePhotoInput" style="display:none" onchange="uploadSitePhoto(event)">
+    <div id="sitePhotoUploadStatus"></div>
+
     <div class="adp-section">
       <div class="adp-sec-lbl">At a Glance</div>
       ${glanceRow('Region', site.region)}
@@ -2507,6 +2519,48 @@ async function saveSiteModal() {
 
   showToast('✓ Site updated');
   closeSiteModal();
+}
+
+async function uploadSitePhoto(event) {
+  const file = event.target.files[0];
+  event.target.value = '';
+  if (!file) return;
+  const siteId = S.editingSiteId;
+  const site = SITES_DATA.find(s => s.id === siteId);
+  if (!site || !siteId) return;
+
+  const btn = document.querySelector('.site-add-photo-btn');
+  const statusEl = document.getElementById('sitePhotoUploadStatus');
+  if (btn) { btn.disabled = true; btn.textContent = 'Uploading…'; }
+
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+  const path = `${siteId}/${Date.now()}.${ext}`;
+
+  const { error: uploadError } = await sb.storage.from('site-photos').upload(path, file);
+  if (uploadError) {
+    console.error('Failed to upload photo', uploadError);
+    if (statusEl) statusEl.textContent = 'Upload failed — try again';
+    if (btn) { btn.disabled = false; btn.textContent = '📷 Add Photo'; }
+    return;
+  }
+
+  const { data: urlData } = sb.storage.from('site-photos').getPublicUrl(path);
+  const photoUrl = urlData.publicUrl;
+
+  const { error: insertError } = await sb.from('site_photos').insert({
+    site_id: siteId, uploaded_by: MY_USER_ID, photo_url: photoUrl,
+  });
+  if (insertError) {
+    console.error('Failed to save photo record', insertError);
+    if (statusEl) statusEl.textContent = 'Upload failed — try again';
+    if (btn) { btn.disabled = false; btn.textContent = '📷 Add Photo'; }
+    return;
+  }
+
+  site.photos.push({ url: photoUrl, caption: '' });
+  showToast('✓ Photo added');
+  openSiteDetail(siteId);
+  renderSites();
 }
 
 // ─────────────────────────────────────────────────

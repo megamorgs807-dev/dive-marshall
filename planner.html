@@ -642,6 +642,8 @@
       border-radius: 5px; color: #fff; flex-shrink: 0;
     }
     .site-chev { color: var(--grey3); font-size: 16px; flex-shrink: 0; }
+    .site-fav-star { font-size: 19px; flex-shrink: 0; cursor: pointer; line-height: 1; padding: 2px; }
+    .site-modal-fav-btn { background: none; border: none; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1; }
     .site-photo-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; -webkit-overflow-scrolling: touch; }
     .site-photo-img { height: 160px; width: auto; flex-shrink: 0; border-radius: var(--r); object-fit: cover; box-shadow: 0 1px 4px rgba(0,30,60,0.12); }
     .site-add-photo-btn {
@@ -1651,6 +1653,7 @@
   <div class="log-modal-hdr">
     <button class="log-modal-back" onclick="closeSiteModal()">&#8249; Back</button>
     <div class="log-modal-title" id="siteModalTitle">Dive Site</div>
+    <button class="site-modal-fav-btn" id="siteModalFavBtn" onclick="toggleFavSite(S.editingSiteId)">☆</button>
     <button class="log-modal-save" onclick="saveSiteModal()">Save</button>
   </div>
   <div class="log-modal-body" id="siteModalBody"></div>
@@ -1749,6 +1752,7 @@ async function loadAppData() {
   const { data: me } = await sb.from('users').select('*').eq('auth_id', authUser.id).single();
   S.me = me;
   MY_USER_ID = me ? me.user_id : null;
+  S.favSiteIds = new Set((me && me.favourite_site_ids) || []);
 
   const [sitesRes, itemsRes, signupsRes, weeksRes, usersRes, noticesRes, logsRes, photosRes] = await Promise.all([
     sb.from('dive_sites').select('*').eq('club_id', me.club_id),
@@ -2425,9 +2429,11 @@ function renderSites() {
   const lblEl = document.getElementById('sitesListLbl');
   if (lblEl) lblEl.textContent = `Club Dive Sites (${SITES_DATA.length})`;
   let html = '';
-  SITES_DATA.forEach(site => {
+  const sorted = [...SITES_DATA].sort((a,b) => isFavSite(b.id) - isFavSite(a.id));
+  sorted.forEach(site => {
     const col = TYPE_COLOR[site.type] || '#8e8e93';
     const thumb = site.photos && site.photos[0] ? `<img src="${site.photos[0].url}" alt="${site.name}">` : (SITE_ICONS[site.type]||'📍');
+    const fav = isFavSite(site.id);
     html += `<div class="site-card" onclick="openSiteDetail('${site.id}')">
       <div class="site-icon" style="background:${SITE_BG[site.type]||'#f3f4f6'}">${thumb}</div>
       <div class="site-info">
@@ -2435,10 +2441,34 @@ function renderSites() {
         <div class="site-meta">${[site.region, site.depth ? `${site.depth}m typical` : null, site.lastDived ? `Last dived ${site.lastDived}` : 'Not dived yet'].filter(Boolean).join(' · ')}</div>
       </div>
       <span class="site-badge" style="background:${col}">${TYPE_LABEL[site.type]||site.type}</span>
+      <span class="site-fav-star${fav?' on':''}" onclick="event.stopPropagation(); toggleFavSite('${site.id}')">${fav?'⭐':'☆'}</span>
       <span class="site-chev">›</span>
     </div>`;
   });
   document.getElementById('sitesList').innerHTML = html;
+}
+
+function isFavSite(id) { return !!(S.favSiteIds && S.favSiteIds.has(id)); }
+
+async function toggleFavSite(id) {
+  if (!S.favSiteIds) S.favSiteIds = new Set();
+  const nowFav = !S.favSiteIds.has(id);
+  nowFav ? S.favSiteIds.add(id) : S.favSiteIds.delete(id);
+  renderSites();
+  const favStarBtn = document.getElementById('siteModalFavBtn');
+  if (favStarBtn && S.editingSiteId === id) favStarBtn.textContent = nowFav ? '⭐' : '☆';
+
+  const { error } = await sb.from('users').update({
+    favourite_site_ids: Array.from(S.favSiteIds),
+  }).eq('user_id', MY_USER_ID);
+
+  if (error) {
+    console.error('Failed to save favourite', error);
+    nowFav ? S.favSiteIds.delete(id) : S.favSiteIds.add(id);
+    renderSites();
+    if (favStarBtn && S.editingSiteId === id) favStarBtn.textContent = nowFav ? '☆' : '⭐';
+    showToast('Could not save — try again');
+  }
 }
 
 function openSiteDetail(id) {
@@ -2446,6 +2476,7 @@ function openSiteDetail(id) {
   if (!site) return;
   S.editingSiteId = id;
   document.getElementById('siteModalTitle').textContent = site.name;
+  document.getElementById('siteModalFavBtn').textContent = isFavSite(id) ? '⭐' : '☆';
 
   const glanceRow = (lbl, val) => val ? `<div class="f-row"><span class="f-lbl">${lbl}</span><span style="flex:1;text-align:right;color:var(--txt2);font-size:15px;">${val}</span></div>` : '';
   const editRow = (lbl, id, val, ph, tall) => `

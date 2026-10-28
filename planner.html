@@ -652,6 +652,38 @@
       cursor: pointer; font-family: inherit;
     }
     .site-comment-post-btn:active { opacity: 0.85; }
+
+    /* ── Chat ── */
+    .chat-wrap { display: flex; flex-direction: column; padding: 14px 16px 0; }
+    .chat-messages { display: flex; flex-direction: column; gap: 10px; padding-bottom: 16px; }
+    .chat-empty { text-align: center; padding: 48px 24px; color: var(--txt3); font-size: 14px; }
+    .chat-msg { max-width: 78%; display: flex; flex-direction: column; gap: 2px; }
+    .chat-msg.mine { align-self: flex-end; align-items: flex-end; }
+    .chat-msg.theirs { align-self: flex-start; align-items: flex-start; }
+    .chat-msg-sender { font-size: 11px; font-weight: 600; color: var(--txt3); padding: 0 4px; }
+    .chat-msg-bubble { padding: 9px 13px; border-radius: 16px; font-size: 14.5px; line-height: 1.4; white-space: pre-wrap; word-break: break-word; }
+    .chat-msg.mine .chat-msg-bubble { background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%); color: #fff; border-bottom-right-radius: 4px; }
+    .chat-msg.theirs .chat-msg-bubble { background: var(--card); color: var(--txt1); box-shadow: 0 1px 3px rgba(0,30,60,0.08); border-bottom-left-radius: 4px; }
+    .chat-msg-time { font-size: 10px; color: var(--txt3); padding: 0 4px; }
+    .chat-composer {
+      position: sticky; bottom: 0; display: flex; align-items: flex-end; gap: 8px;
+      padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px));
+      background: linear-gradient(0deg, var(--bg) 70%, rgba(238,242,249,0));
+      margin-top: auto;
+    }
+    .chat-input {
+      flex: 1; resize: none; border: 1px solid var(--grey4); border-radius: 18px;
+      padding: 9px 14px; font-size: 14.5px; font-family: inherit; color: var(--txt1);
+      background: var(--card); max-height: 100px; line-height: 1.4; outline: none;
+    }
+    .chat-input:focus { border-color: var(--navy); }
+    .chat-send-btn {
+      flex-shrink: 0; background: var(--navy); color: #fff; border: none;
+      border-radius: 18px; padding: 10px 18px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+    }
+    .chat-send-btn:active { opacity: 0.85; }
+    .chat-send-btn:disabled { opacity: 0.5; cursor: default; }
     .site-photo-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; -webkit-overflow-scrolling: touch; }
     .site-photo-img { height: 160px; width: auto; flex-shrink: 0; border-radius: var(--r); object-fit: cover; box-shadow: 0 1px 4px rgba(0,30,60,0.12); }
     .site-add-photo-btn {
@@ -1503,6 +1535,17 @@
     </div>
   </div>
 
+  <!-- ── Tab: Chat ── -->
+  <div id="tab-chat" class="tab-content">
+    <div class="chat-wrap">
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-composer">
+        <textarea class="chat-input" id="chatInput" placeholder="Message the club…" rows="1" oninput="autoGrowChatInput(this)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"></textarea>
+        <button class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ── Tab: Profile ── -->
   <div id="tab-profile" class="tab-content">
     <div class="profile-wrap">
@@ -1621,6 +1664,15 @@
       <circle cx="12" cy="8" r="2.5"/>
     </svg>
     Sites
+  </button>
+  <button class="nav-tab" id="nav-chat" onclick="switchTab('chat')">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4H20V16H9L5 19.5V16H4V4Z"/>
+      <circle cx="8.5" cy="10" r="1" fill="currentColor" stroke="none"/>
+      <circle cx="12" cy="10" r="1" fill="currentColor" stroke="none"/>
+      <circle cx="15.5" cy="10" r="1" fill="currentColor" stroke="none"/>
+    </svg>
+    Chat
   </button>
   <button class="nav-tab" id="nav-profile" onclick="switchTab('profile')">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1741,6 +1793,24 @@ async function showApp() {
   renderDashboard();
   renderAll();         // pre-render calendar in background
   renderSites();       // pre-render sites in background
+  subscribeToChat();
+}
+
+let _chatChannel = null;
+function subscribeToChat() {
+  if (_chatChannel || !S.me) return;
+  _chatChannel = sb.channel('club-chat-' + S.me.club_id)
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `club_id=eq.${S.me.club_id}` }, (payload) => {
+      const m = payload.new;
+      if (m.week_id || m.trip_id) return;
+      if (S.chatMessages.some(existing => existing.id === m.message_id)) return;
+      S.chatMessages.push({
+        id: m.message_id, userId: m.user_id, senderName: m.full_name || 'A member',
+        body: m.body, createdAt: m.created_at,
+      });
+      if (S.tab === 'chat') renderChat();
+    })
+    .subscribe();
 }
 
 // ─────────────────────────────────────────────────
@@ -1763,7 +1833,7 @@ async function loadAppData() {
   MY_USER_ID = me ? me.user_id : null;
   S.favSiteIds = new Set((me && me.favourite_site_ids) || []);
 
-  const [sitesRes, itemsRes, signupsRes, weeksRes, usersRes, noticesRes, logsRes, photosRes, commentsRes] = await Promise.all([
+  const [sitesRes, itemsRes, signupsRes, weeksRes, usersRes, noticesRes, logsRes, photosRes, commentsRes, messagesRes] = await Promise.all([
     sb.from('dive_sites').select('*').eq('club_id', me.club_id),
     sb.from('calendar_items').select('*').eq('club_id', me.club_id),
     sb.from('calendar_item_signups').select('calendar_item_id').eq('user_id', MY_USER_ID),
@@ -1773,7 +1843,13 @@ async function loadAppData() {
     sb.from('logbook_entries').select('*').eq('user_id', MY_USER_ID),
     sb.from('site_photos').select('*').order('created_at', { ascending: false }),
     sb.from('site_comments').select('*').order('created_at', { ascending: false }),
+    sb.from('messages').select('*').eq('club_id', me.club_id).is('week_id', null).is('trip_id', null).order('created_at', { ascending: true }),
   ]);
+
+  S.chatMessages = (messagesRes.data || []).map(m => ({
+    id: m.message_id, userId: m.user_id, senderName: m.full_name || 'A member',
+    body: m.body, createdAt: m.created_at,
+  }));
 
   const photosBySite = {};
   (photosRes.data || []).forEach(p => {
@@ -2274,6 +2350,7 @@ const TAB_TITLES = {
   calendar:  'Bude Dive Club',
   logbook:   'Dive Logbook',
   sites:     'Dive Sites',
+  chat:      'Club Chat',
   profile:   'Morgan O',
 };
 
@@ -2301,6 +2378,7 @@ function switchTab(name) {
   if (name === 'calendar')  renderAll();
   if (name === 'logbook')   renderLogbook();
   if (name === 'sites')     renderSites();
+  if (name === 'chat')      renderChat();
 
   document.getElementById('app').scrollTop = 0;
 }
@@ -2705,6 +2783,80 @@ async function postSiteComment() {
   });
   openSiteDetail(siteId);
   showToast('✓ Posted');
+}
+
+// ─────────────────────────────────────────────────
+// CHAT
+// ─────────────────────────────────────────────────
+
+function fmtChatTime(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  const now = new Date();
+  const sameDay = d.toDateString() === now.toDateString();
+  const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  if (sameDay) return time;
+  return `${d.toLocaleDateString('en-GB', { day:'numeric', month:'short' })} · ${time}`;
+}
+
+function renderChat() {
+  const el = document.getElementById('chatMessages');
+  if (!el) return;
+  const msgs = S.chatMessages || [];
+
+  if (!msgs.length) {
+    el.innerHTML = `<div class="chat-empty">No messages yet — say hi to the club 👋</div>`;
+  } else {
+    let html = '';
+    let lastSenderId = null;
+    msgs.forEach(m => {
+      const mine = m.userId === MY_USER_ID;
+      const showSender = !mine && m.userId !== lastSenderId;
+      lastSenderId = m.userId;
+      html += `<div class="chat-msg ${mine ? 'mine' : 'theirs'}">
+        ${showSender ? `<div class="chat-msg-sender">${escapeHtml(m.senderName)}</div>` : ''}
+        <div class="chat-msg-bubble">${escapeHtml(m.body)}</div>
+        <div class="chat-msg-time">${fmtChatTime(m.createdAt)}</div>
+      </div>`;
+    });
+    el.innerHTML = html;
+  }
+  requestAnimationFrame(() => { document.getElementById('app').scrollTop = document.getElementById('app').scrollHeight; });
+}
+
+function autoGrowChatInput(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+async function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  const body = input.value.trim();
+  if (!body || !S.me) return;
+
+  const btn = document.querySelector('.chat-send-btn');
+  if (btn) btn.disabled = true;
+  input.value = '';
+  autoGrowChatInput(input);
+
+  const { data, error } = await sb.from('messages').insert({
+    club_id: S.me.club_id, user_id: MY_USER_ID, full_name: S.me.full_name, body,
+  }).select('message_id, created_at').single();
+
+  if (btn) btn.disabled = false;
+
+  if (error) {
+    console.error('Failed to send message', error);
+    input.value = body;
+    showToast('Could not send — try again');
+    return;
+  }
+
+  S.chatMessages.push({
+    id: data.message_id, userId: MY_USER_ID, senderName: S.me.full_name,
+    body, createdAt: data.created_at,
+  });
+  renderChat();
 }
 
 // ─────────────────────────────────────────────────

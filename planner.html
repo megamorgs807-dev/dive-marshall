@@ -2413,7 +2413,7 @@ function renderSites() {
       <div class="site-icon" style="background:${SITE_BG[site.type]||'#f3f4f6'}">${SITE_ICONS[site.type]||'📍'}</div>
       <div class="site-info">
         <div class="site-name">${site.name}</div>
-        <div class="site-meta">${site.region} · ${site.depth}m typical${site.lastDived ? ` · Last dived ${site.lastDived}` : ' · Not dived yet'}</div>
+        <div class="site-meta">${[site.region, site.depth ? `${site.depth}m typical` : null, site.lastDived ? `Last dived ${site.lastDived}` : 'Not dived yet'].filter(Boolean).join(' · ')}</div>
       </div>
       <span class="site-badge" style="background:${col}">${TYPE_LABEL[site.type]||site.type}</span>
       <span class="site-chev">›</span>
@@ -4279,6 +4279,28 @@ function confirmAdd() {
     }
   }
   items.forEach(it => S.items.push(it));
+
+  // Auto-create a Dive Sites entry for a brand-new dive site name
+  if (f.itemType === 'dive') {
+    const siteName = f.site.trim();
+    const exists = SITES_DATA.some(s => s.name.toLowerCase() === siteName.toLowerCase());
+    if (!exists) {
+      const newSite = {
+        id: null, name: siteName, type: 'shore', depth: null, depthMin: null,
+        visibility: null, tempMin: null, tempMax: null, region: '', lastDived: '',
+        bestTide: '', hazards: '', tips: '', suitableFor: '', parkingAccess: '',
+      };
+      SITES_DATA.push(newSite);
+      sb.from('dive_sites').insert({ club_id: S.me.club_id, site_name: siteName })
+        .select('site_id').single()
+        .then(({ data, error }) => {
+          if (error) { console.error('Failed to create dive site', error); return; }
+          newSite.id = data.site_id;
+          if (S.tab === 'sites') renderSites();
+        });
+    }
+  }
+
   items.forEach(it => {
     sb.from('calendar_items').insert({
       id: it.id, club_id: S.me.club_id, item_type: it.itemType, date: it.date, time: it.time,

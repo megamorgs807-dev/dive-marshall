@@ -602,16 +602,10 @@
     /* ── Dive Sites ── */
     .sites-wrap { padding: 0 0 90px; }
 
-    .sites-map-ph {
-      background: linear-gradient(160deg, #dce8f5 0%, #e8f0fb 100%);
-      height: 180px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 6px; border-bottom: 0.5px solid var(--sep);
-    }
-    .sites-map-ph-icon { font-size: 36px; }
-    .sites-map-ph-txt { font-size: 14px; color: var(--navy); font-weight: 600; }
-    .sites-map-ph-sub { font-size: 12px; color: var(--txt3); }
+    .sites-map { height: 200px; border-bottom: 0.5px solid var(--sep); background: #dce8f5; }
+    .sites-map .leaflet-popup-content { font-family: inherit; font-size: 13px; }
+    .sites-map-popup-title { font-weight: 700; margin-bottom: 2px; }
+    .sites-map-popup-link { color: var(--navy); font-weight: 600; cursor: pointer; }
 
     .sites-list-lbl {
       font-size: 13px; font-weight: 600;
@@ -1418,6 +1412,7 @@
     .auth-hint { font-size: 12px; color: var(--txt3); text-align: center; margin-top: 2px; }
     .auth-switch { color: var(--navy); font-weight: 700; cursor: pointer; }
   </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body>
 
@@ -1499,11 +1494,7 @@
   <!-- ── Tab: Dive Sites ── -->
   <div id="tab-sites" class="tab-content">
     <div class="sites-wrap">
-      <div class="sites-map-ph">
-        <div class="sites-map-ph-icon">🗺️</div>
-        <div class="sites-map-ph-txt">Dive Site Map</div>
-        <div class="sites-map-ph-sub">Interactive map coming in full build</div>
-      </div>
+      <div id="sitesMap" class="sites-map"></div>
       <div class="sites-list-lbl" id="sitesListLbl">Club Dive Sites</div>
       <div id="sitesList"></div>
     </div>
@@ -1689,6 +1680,7 @@
 <div class="tide-pop" id="tidePop"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ─────────────────────────────────────────────────
 // AUTH — Supabase project for Bude Dive Club
@@ -1810,6 +1802,7 @@ async function loadAppData() {
   SITES_DATA.length = 0;
   (sitesRes.data || []).forEach(s => SITES_DATA.push({
     id: s.site_id, name: s.site_name, type: parseSiteType(s.notes), depth: s.typical_depth_max_m,
+    lat: s.latitude, lng: s.longitude,
     depthMin: s.typical_depth_min_m, visibility: s.typical_visibility_m,
     tempMin: s.temperature_min_c, tempMax: s.temperature_max_c,
     region: s.region, lastDived: fmtLastDived(lastDivedBySite[s.site_name]),
@@ -2470,9 +2463,51 @@ function renderSites() {
     </div>`;
   });
   document.getElementById('sitesList').innerHTML = html;
+  renderSitesMap();
 }
 
 function isFavSite(id) { return !!(S.favSiteIds && S.favSiteIds.has(id)); }
+
+let _sitesMapInstance = null, _sitesMapMarkers = null;
+function renderSitesMap() {
+  const el = document.getElementById('sitesMap');
+  if (!el || typeof L === 'undefined') return;
+  const pinned = SITES_DATA.filter(s => s.lat != null && s.lng != null);
+
+  if (!_sitesMapInstance) {
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+      iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    });
+    _sitesMapInstance = L.map(el, { zoomControl: true, attributionControl: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(_sitesMapInstance);
+    _sitesMapMarkers = L.layerGroup().addTo(_sitesMapInstance);
+  } else {
+    _sitesMapMarkers.clearLayers();
+  }
+
+  // Defer sizing/positioning until after the tab's layout has settled —
+  // doing this before the container has real dimensions leaves markers
+  // placed using a stale (often zero) size and they render off-screen.
+  setTimeout(() => {
+    _sitesMapInstance.invalidateSize();
+    if (!pinned.length) {
+      _sitesMapInstance.setView([50.73, -4.65], 10);
+      return;
+    }
+    pinned.forEach(site => {
+      const marker = L.marker([site.lat, site.lng]).addTo(_sitesMapMarkers);
+      const popupEl = document.createElement('div');
+      popupEl.innerHTML = `<div class="sites-map-popup-title">${site.name}</div><div class="sites-map-popup-link">View site →</div>`;
+      popupEl.querySelector('.sites-map-popup-link').onclick = () => { _sitesMapInstance.closePopup(); openSiteDetail(site.id); };
+      marker.bindPopup(popupEl);
+    });
+    const bounds = L.latLngBounds(pinned.map(s => [s.lat, s.lng]));
+    _sitesMapInstance.fitBounds(bounds, { padding: [24, 24], maxZoom: 13 });
+  }, 50);
+}
 
 async function toggleFavSite(id) {
   if (!S.favSiteIds) S.favSiteIds = new Set();
